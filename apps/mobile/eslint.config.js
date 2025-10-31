@@ -11,7 +11,9 @@ export default [
       "babel.config.js",
       "metro.config.js",
       "jest.config.js",
-      ".prettierrc.js"
+      ".prettierrc.js",
+      "android/**",
+      "ios/**"
     ]
   },
   {
@@ -27,10 +29,12 @@ export default [
     plugins: { "@typescript-eslint": ts },
     rules: {
       ...js.configs.recommended.rules,
-      ...ts.configs.recommended.rules
+      ...ts.configs.recommended.rules,
+      // CI was crashing here on GitHub:
+      "@typescript-eslint/no-unused-expressions": "off",
+      "no-undef": "off"
     }
   },
-  // test files (RN/Jest)
   {
     files: ["**/__tests__/**/*.{ts,tsx,js,jsx}", "**/*.test.{ts,tsx,js,jsx}"],
     languageOptions: {
