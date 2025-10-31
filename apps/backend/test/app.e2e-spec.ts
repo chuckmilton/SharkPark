@@ -2,6 +2,7 @@ import request from 'supertest';
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import { AppModule } from '../src/app.module';
+import { API_PREFIX, SERVICE_NAME } from '../src/constants';
 
 describe('App (e2e)', () => {
   let app: INestApplication;
@@ -12,17 +13,17 @@ describe('App (e2e)', () => {
     }).compile();
 
     app = moduleFixture.createNestApplication();
-    app.setGlobalPrefix('api/v1');
+    app.setGlobalPrefix(API_PREFIX);
     await app.init();
   });
 
-  it('/api/v1/health (GET)', async () => {
+  it(`/${API_PREFIX}/health (GET)`, async () => {
     await request(app.getHttpServer())
-      .get('/api/v1/health')
+      .get(`/${API_PREFIX}/health`)
       .expect(200)
       .expect({
         ok: true,
-        service: 'sharkpark-backend',
+        service: SERVICE_NAME,
       });
   });
 

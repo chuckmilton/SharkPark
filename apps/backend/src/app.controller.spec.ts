@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { SERVICE_NAME } from './constants';
 
 describe('AppController', () => {
   let appController: AppController;
@@ -15,9 +16,9 @@ describe('AppController', () => {
   });
 
   it('should return health', () => {
-    expect(appController.getHealth()).toEqual({
+    expect(appController.health()).toEqual({
       ok: true,
-      service: 'sharkpark-backend',
+      service: SERVICE_NAME,
     });
   });
 });
