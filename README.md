@@ -226,39 +226,65 @@ Backend → ML:
 ## File / workspace layout
 
 ```text
-SharkPark/
-├── package.json
-├── pnpm-workspace.yaml
-├── turbo.json
-├── tsconfig.json
-├── eslint.config.mjs
-├── scripts/
-│   └── start-local.sh
-├── apps/
-│   ├── backend/
-│   │   ├── src/
-│   │   │   ├── main.ts
-│   │   │   ├── app.module.ts
-│   │   │   ├── app.controller.ts
-│   │   │   └── app.service.ts
-│   │   ├── test/
-│   │   ├── tsconfig.json
-│   │   ├── tsconfig.build.json
-│   │   ├── jest.config.js
-│   │   ├── jest-e2e.js
-│   │   └── package.json
-│   └── mobile/
-│       ├── App.tsx
-│       ├── android/
-│       ├── ios/
-│       ├── metro.config.js
-│       ├── babel.config.js
-│       └── package.json
-├── services/
-│   └── ml/              # future ML/inference service
-└── packages/
-    ├── types/
-    └── utils/
+SharkPark/                      # monorepo root
+├── package.json                # root scripts + dev deps (turbo, husky, prettier, etc.)
+├── pnpm-workspace.yaml         # tells pnpm which folders are part of the workspace
+├── turbo.json                  # defines shared build/lint/typecheck pipelines across apps
+├── tsconfig.json               # root TS config (extends tsconfig.base.json)
+├── tsconfig.base.json          # shared TS settings for all packages
+├── eslint.config.mjs           # shared lint rules for all packages/apps
+├── .prettierrc                 # code formatting rules
+├── .prettierignore             # files to skip formatting
+├── .husky/                     # git hooks (pre-commit runs lint + typecheck)
+│   └── pre-commit
+├── scripts/                    # helper shell scripts for local/dev ops
+│   └── start-local.sh          # spins up local infra (dynamodb-local, localstack)
+├── docker/                     # local development infrastructure
+│   └── docker-compose.yml      # DynamoDB Local + LocalStack (S3)
+├── infrastructure/             # AWS deployment code (CDK/SST - planned)
+│   └── README.md
+├── apps/                       # runnable applications (what we actually ship)
+│   ├── backend/                # NestJS API server (parking data, auth, events)
+│   │   ├── src/                # backend source code
+│   │   │   ├── main.ts         # NestJS entrypoint / bootstrap
+│   │   │   ├── app.module.ts   # root module, imports other modules
+│   │   │   ├── app.controller.ts # sample controller endpoints
+│   │   │   ├── app.service.ts  # sample service logic
+│   │   │   └── constants.ts    # API prefix, service name
+│   │   ├── test/               # e2e tests for backend
+│   │   ├── dist/               # compiled output (gitignored)
+│   │   ├── tsconfig.json       # backend-specific TS settings (extends root)
+│   │   ├── tsconfig.build.json # TS build target for NestJS
+│   │   ├── jest.config.js      # Jest config for unit tests
+│   │   ├── jest-e2e.js         # Jest config for e2e tests
+│   │   ├── eslint.config.mjs   # backend-specific lint rules
+│   │   └── package.json        # backend app deps/scripts
+│   └── mobile/                 # React Native app (iOS/Android client)
+│       ├── App.tsx             # RN root component (entry point)
+│       ├── android/            # Android native project (auto-generated, rarely edited)
+│       ├── ios/                # iOS native project (auto-generated, rarely edited)
+│       ├── __tests__/          # mobile app tests
+│       ├── metro.config.js     # RN bundler config
+│       ├── babel.config.js     # RN/Babel transforms
+│       ├── eslint.config.mjs   # mobile-specific lint rules
+│       ├── tsconfig.json       # mobile TS config
+│       └── package.json        # mobile app deps/scripts
+├── services/                   # non-Node services / background jobs
+│   └── ml/                     # future ML/inference/training code (Python/TS)
+│                               # will run as separate service with own Dockerfile
+└── packages/                   # shared, versioned libraries for the monorepo
+    ├── types/                  # shared TypeScript types
+    │   ├── src/
+    │   │   └── index.ts        # ParkingLot, OccupancyEvent, Forecast types
+    │   ├── dist/               # compiled declarations (gitignored)
+    │   ├── tsconfig.json       # types package TS config
+    │   └── package.json        # @sharkpark/types
+    └── utils/                  # shared helper functions
+        ├── src/
+        │   └── index.ts        # isoNow(), toOccupancyBucket(), normalizeEmail()
+        ├── dist/               # compiled code (gitignored)
+        ├── tsconfig.json       # utils package TS config
+        └── package.json        # @sharkpark/utils
 ```
 
 ---
