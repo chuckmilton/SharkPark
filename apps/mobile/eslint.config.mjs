@@ -30,7 +30,6 @@ export default [
     rules: {
       ...js.configs.recommended.rules,
       ...ts.configs.recommended.rules,
-      // CI was crashing here on GitHub:
       "@typescript-eslint/no-unused-expressions": "off",
       "no-undef": "off"
     }

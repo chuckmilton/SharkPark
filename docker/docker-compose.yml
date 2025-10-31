@@ -5,11 +5,11 @@ services:
     ports:
       - "8000:8000"
     command: -jar DynamoDBLocal.jar -sharedDb
-    options: >-
-      --health-cmd="curl -f http://localhost:8000/shell/ || exit 1"
-      --health-interval=5s
-      --health-timeout=2s
-      --health-retries=10
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/shell/"]
+      interval: 5s
+      timeout: 2s
+      retries: 10
 
   localstack:
     image: localstack/localstack
@@ -20,8 +20,8 @@ services:
       - EDGE_PORT=4566
     ports:
       - "4566:4566"
-    options: >-
-      --health-cmd="curl -f http://localhost:4566/_localstack/health || exit 1"
-      --health-interval=5s
-      --health-timeout=2s
-      --health-retries=20
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4566/_localstack/health"]
+      interval: 5s
+      timeout: 2s
+      retries: 20

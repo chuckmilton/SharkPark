@@ -1,0 +1,31 @@
+# Build outputs
+dist
+build
+*.tsbuildinfo
+.turbo
+
+# Dependencies
+node_modules
+.pnpm-store
+
+# Logs
+*.log
+
+# Coverage
+coverage
+
+# OS
+.DS_Store
+
+# Mobile specific
+apps/mobile/android
+apps/mobile/ios
+
+# Package locks (we use pnpm)
+package-lock.json
+yarn.lock
+
+# Environment
+.env
+.env.*
+!.env.example

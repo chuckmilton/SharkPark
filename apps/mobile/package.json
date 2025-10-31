@@ -2,10 +2,12 @@
   "name": "mobile",
   "version": "0.0.1",
   "private": true,
+  "type": "commonjs",
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
-    "lint": "eslint . --config ./eslint.config.js",
+    "lint": "eslint . --config ./eslint.config.mjs",
+    "typecheck": "tsc --noEmit",
     "start": "react-native start",
     "test": "jest"
   },

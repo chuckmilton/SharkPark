@@ -173,10 +173,10 @@ pnpm test:e2e
 
 ```bash
 cd apps/mobile
-npm install
-npm run ios
+pnpm install
+pnpm ios
 # or
-npm run android
+pnpm android
 ```
 
 If you see the `xcodebuild ... requires Xcode` error:
@@ -360,8 +360,8 @@ pnpm dev
 
 # new terminal
 cd apps/mobile
-npm install
-npm run ios   # or npm run android
+pnpm install
+pnpm ios   # or pnpm android
 
 # (future)
 cd services/ml

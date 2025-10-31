@@ -12,6 +12,7 @@
     "format": "prettier . --check",
     "format:fix": "prettier . --write",
     "prepare": "husky install",
+    "postinstall": "node -e \"if (process.env.SKIP_LOCAL_INFRA !== '1') require('child_process').execSync('./scripts/start-local.sh', {stdio: 'inherit'})\" || true",
     "test": "echo \"no tests yet\""
   },
   "devDependencies": {
