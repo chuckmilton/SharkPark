@@ -1,0 +1,27 @@
+services:
+  dynamodb:
+    image: amazon/dynamodb-local
+    container_name: sharkpark-dynamodb
+    ports:
+      - "8000:8000"
+    command: -jar DynamoDBLocal.jar -sharedDb
+    options: >-
+      --health-cmd="curl -f http://localhost:8000/shell/ || exit 1"
+      --health-interval=5s
+      --health-timeout=2s
+      --health-retries=10
+
+  localstack:
+    image: localstack/localstack
+    container_name: sharkpark-localstack
+    environment:
+      - SERVICES=s3
+      - AWS_DEFAULT_REGION=us-west-2
+      - EDGE_PORT=4566
+    ports:
+      - "4566:4566"
+    options: >-
+      --health-cmd="curl -f http://localhost:4566/_localstack/health || exit 1"
+      --health-interval=5s
+      --health-timeout=2s
+      --health-retries=20

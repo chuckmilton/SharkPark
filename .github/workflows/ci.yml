@@ -1,0 +1,60 @@
+name: CI
+on: [push, pull_request]
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    env:
+      SKIP_LOCAL_INFRA: "1"
+    services:
+      dynamodb:
+        image: amazon/dynamodb-local
+        ports:
+          - "8000:8000"
+        options: >-
+          --health-cmd="curl -f http://localhost:8000/shell/ || exit 1"
+          --health-interval=5s
+          --health-timeout=2s
+          --health-retries=10
+      localstack:
+        image: localstack/localstack
+        env:
+          SERVICES: s3
+          AWS_DEFAULT_REGION: us-west-2
+          EDGE_PORT: 4566
+        ports:
+          - "4566:4566"
+        options: >-
+          --health-cmd="curl -f http://localhost:4566/_localstack/health || exit 1"
+          --health-interval=5s
+          --health-timeout=2s
+          --health-retries=20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.20.0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install deps
+        run: pnpm install
+
+      - name: Build
+        run: pnpm build
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Typecheck
+        run: pnpm typecheck
+
+      - name: Backend unit tests
+        run: pnpm -C apps/backend test
+
+      - name: Backend e2e tests
+        run: pnpm -C apps/backend test:e2e
