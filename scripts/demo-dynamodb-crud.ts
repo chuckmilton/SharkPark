@@ -31,13 +31,13 @@ interface ParkingLot {
 }
 
 async function demoCRUDOperations() {
-  console.log('🎯 DynamoDB CRUD Demo - Submission 1, Step 4\n');
-  console.log(`📍 Endpoint: ${ENDPOINT}`);
-  console.log(`📊 Table: ${TABLE_NAME}\n`);
-  console.log('═'.repeat(60));
+  console.log('DynamoDB CRUD Demo - Submission 1, Step 4\n');
+  console.log(`Endpoint: ${ENDPOINT}`);
+  console.log(`Table: ${TABLE_NAME}\n`);
+  console.log('='.repeat(60));
 
   // CREATE - Save data to DynamoDB
-  console.log('\n1️⃣  CREATE - Saving parking lot data...\n');
+  console.log('\n[STEP 1] CREATE - Saving parking lot data...\n');
   
   const lot1: ParkingLot = {
     id: 'lot-g7',
@@ -63,7 +63,7 @@ async function demoCRUDOperations() {
       Item: marshall(lot1),
     })
   );
-  console.log('✅ Saved:', lot1.name);
+  console.log('[SAVED]', lot1.name);
 
   await client.send(
     new PutItemCommand({
@@ -71,10 +71,10 @@ async function demoCRUDOperations() {
       Item: marshall(lot2),
     })
   );
-  console.log('✅ Saved:', lot2.name);
+  console.log('[SAVED]', lot2.name);
 
   // READ - Retrieve single item
-  console.log('\n2️⃣  READ - Retrieving specific parking lot...\n');
+  console.log('\n[STEP 2] READ - Retrieving specific parking lot...\n');
   
   const getResult = await client.send(
     new GetItemCommand({
@@ -85,7 +85,7 @@ async function demoCRUDOperations() {
 
   if (getResult.Item) {
     const retrievedLot = unmarshall(getResult.Item) as ParkingLot;
-    console.log('📦 Retrieved lot:', retrievedLot.name);
+    console.log('Retrieved lot:', retrievedLot.name);
     console.log('   Capacity:', retrievedLot.capacity);
     console.log('   Current Occupancy:', retrievedLot.currentOccupancy);
     console.log(
@@ -97,7 +97,7 @@ async function demoCRUDOperations() {
   }
 
   // READ ALL - Scan all items
-  console.log('\n3️⃣  READ ALL - Retrieving all parking lots...\n');
+  console.log('\n[STEP 3] READ ALL - Retrieving all parking lots...\n');
   
   const scanResult = await client.send(
     new ScanCommand({
@@ -105,20 +105,20 @@ async function demoCRUDOperations() {
     })
   );
 
-  console.log(`📋 Found ${scanResult.Items?.length || 0} parking lots:\n`);
+  console.log(`Found ${scanResult.Items?.length || 0} parking lots:\n`);
   scanResult.Items?.forEach((item) => {
     const lot = unmarshall(item) as ParkingLot;
     const availableSpots = lot.capacity - lot.currentOccupancy;
     const percentFull = ((lot.currentOccupancy / lot.capacity) * 100).toFixed(1);
     
-    console.log(`   • ${lot.name}`);
+    console.log(`   - ${lot.name}`);
     console.log(`     ${lot.currentOccupancy}/${lot.capacity} spots used (${percentFull}%)`);
     console.log(`     ${availableSpots} spots available - Confidence: ${lot.confidence}`);
     console.log('');
   });
 
   // UPDATE - Modify existing item
-  console.log('4️⃣  UPDATE - Updating occupancy for Lot G7...\n');
+  console.log('[STEP 4] UPDATE - Updating occupancy for Lot G7...\n');
   
   const newOccupancy = 280;
   await client.send(
@@ -145,13 +145,13 @@ async function demoCRUDOperations() {
 
   if (updatedResult.Item) {
     const updatedLot = unmarshall(updatedResult.Item) as ParkingLot;
-    console.log('✅ Updated successfully!');
+    console.log('[SUCCESS] Updated successfully!');
     console.log('   New occupancy:', updatedLot.currentOccupancy);
     console.log('   Available spots:', updatedLot.capacity - updatedLot.currentOccupancy);
   }
 
   // DELETE - Remove item
-  console.log('\n5️⃣  DELETE - Removing Lot G8...\n');
+  console.log('\n[STEP 5] DELETE - Removing Lot G8...\n');
   
   await client.send(
     new DeleteItemCommand({
@@ -159,10 +159,10 @@ async function demoCRUDOperations() {
       Key: marshall({ id: 'lot-g8' }),
     })
   );
-  console.log('✅ Deleted: Parking Lot G8');
+  console.log('[DELETED] Parking Lot G8');
 
   // Final scan
-  console.log('\n6️⃣  FINAL STATE - All remaining lots:\n');
+  console.log('\n[STEP 6] FINAL STATE - All remaining lots:\n');
   
   const finalScan = await client.send(
     new ScanCommand({
@@ -170,22 +170,21 @@ async function demoCRUDOperations() {
     })
   );
 
-  console.log(`📊 Total lots in database: ${finalScan.Items?.length || 0}\n`);
+  console.log(`Total lots in database: ${finalScan.Items?.length || 0}\n`);
   finalScan.Items?.forEach((item) => {
     const lot = unmarshall(item) as ParkingLot;
-    console.log(`   ✓ ${lot.name} - ${lot.currentOccupancy}/${lot.capacity} spots used`);
+    console.log(`   - ${lot.name} - ${lot.currentOccupancy}/${lot.capacity} spots used`);
   });
 
-  console.log('\n' + '═'.repeat(60));
-  console.log('✅ Demo complete! All CRUD operations successful.\n');
-  console.log('📸 Take screenshots of this output for your submission!\n');
+  console.log('\n' + '='.repeat(60));
+  console.log('Demo completed. All CRUD operations successful.\n');
 }
 
 demoCRUDOperations().catch((error) => {
-  console.error('\n❌ Error during demo:', error);
-  console.error('\n⚠️  Make sure:');
+  console.error('\n[ERROR] Error during demo:', error);
+  console.error('\nMake sure:');
   console.error('   1. Docker is running');
   console.error('   2. DynamoDB Local is started: ./scripts/start-local.sh');
-  console.error('   3. Table is created: tsx scripts/setup-dynamodb-tables.ts\n');
+  console.error('   3. Table is created: pnpm db:setup\n');
   process.exit(1);
 });

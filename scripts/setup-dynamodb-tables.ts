@@ -18,27 +18,27 @@ const client = new DynamoDBClient({
 });
 
 async function setupTables() {
-  console.log('🚀 Setting up DynamoDB tables...\n');
+  console.log('Setting up DynamoDB tables...\n');
   console.log(`Region: ${REGION}`);
   console.log(`Endpoint: ${ENDPOINT}\n`);
 
   // Check existing tables
   const listCommand = new ListTablesCommand({});
   const existingTables = await client.send(listCommand);
-  console.log('📋 Existing tables:', existingTables.TableNames || []);
+  console.log('Existing tables:', existingTables.TableNames || []);
 
   // Create parking lots table
   const tableName = 'sharkpark-parking-lots';
   
   // Delete if exists
   if (existingTables.TableNames?.includes(tableName)) {
-    console.log(`\n🗑️  Deleting existing table: ${tableName}`);
+    console.log(`\nDeleting existing table: ${tableName}`);
     await client.send(new DeleteTableCommand({ TableName: tableName }));
     // Wait a bit for deletion
     await new Promise((resolve) => setTimeout(resolve, 1000));
   }
 
-  console.log(`\n✨ Creating table: ${tableName}`);
+  console.log(`\nCreating table: ${tableName}`);
   
   const createCommand = new CreateTableCommand({
     TableName: tableName,
@@ -53,10 +53,10 @@ async function setupTables() {
 
   try {
     await client.send(createCommand);
-    console.log(`✅ Table created successfully: ${tableName}`);
+    console.log(`[SUCCESS] Table created successfully: ${tableName}`);
   } catch (error: unknown) {
     if (error instanceof Error && error.name === 'ResourceInUseException') {
-      console.log(`⚠️  Table already exists: ${tableName}`);
+      console.log(`[WARNING] Table already exists: ${tableName}`);
     } else {
       throw error;
     }
@@ -64,11 +64,11 @@ async function setupTables() {
 
   // List tables again to confirm
   const finalTables = await client.send(listCommand);
-  console.log('\n📊 Final tables:', finalTables.TableNames);
-  console.log('\n✅ Setup complete!\n');
+  console.log('\nFinal tables:', finalTables.TableNames);
+  console.log('\nSetup complete!\n');
 }
 
 setupTables().catch((error) => {
-  console.error('❌ Error setting up tables:', error);
+  console.error('[ERROR] Error setting up tables:', error);
   process.exit(1);
 });

@@ -4,9 +4,9 @@ This guide shows you how to demonstrate **saving and retrieving data** from the 
 
 ## Prerequisites
 
-1. ✅ Docker Desktop running
-2. ✅ Repository cloned with access
-3. ✅ Dependencies installed (`pnpm install`)
+1. Docker Desktop running
+2. Repository cloned with access
+3. Dependencies installed (`pnpm install`)
 
 ## Quick Demo (3 Simple Steps)
 
@@ -18,7 +18,7 @@ This guide shows you how to demonstrate **saving and retrieving data** from the 
 
 **Expected output:**
 ```
-✅ Local infra up (DynamoDB + LocalStack)
+Local infra up (DynamoDB + LocalStack)
 ```
 
 ### Step 2: Create Database Table
@@ -29,15 +29,15 @@ pnpm db:setup
 
 **Expected output:**
 ```
-🚀 Setting up DynamoDB tables...
+Setting up DynamoDB tables...
 Region: us-west-2
 Endpoint: http://localhost:8000
-✨ Creating table: sharkpark-parking-lots
-✅ Table created successfully: sharkpark-parking-lots
-✅ Setup complete!
+Creating table: sharkpark-parking-lots
+[SUCCESS] Table created successfully: sharkpark-parking-lots
+Setup complete!
 ```
 
-📸 **Take a screenshot of this output**
+**Take a screenshot of this output**
 
 ### Step 3: Run CRUD Demo
 
@@ -47,37 +47,40 @@ pnpm db:demo
 
 **Expected output:**
 ```
-🎯 DynamoDB CRUD Demo - Submission 1, Step 4
+DynamoDB CRUD Demo - Submission 1, Step 4
 
-1️⃣  CREATE - Saving parking lot data...
-✅ Saved: Parking Lot G7 (East Campus)
-✅ Saved: Parking Lot G8 (West Campus)
+[STEP 1] CREATE - Saving parking lot data...
+[SAVED] Parking Lot G7 (East Campus)
+[SAVED] Parking Lot G8 (West Campus)
 
-2️⃣  READ - Retrieving specific parking lot...
-📦 Retrieved lot: Parking Lot G7 (East Campus)
+[STEP 2] READ - Retrieving specific parking lot...
+Retrieved lot: Parking Lot G7 (East Campus)
    Capacity: 450
    Current Occupancy: 342
    Availability: 108 spots
 
-3️⃣  READ ALL - Retrieving all parking lots...
-📋 Found 2 parking lots:
-   • Parking Lot G8 (West Campus)
+[STEP 3] READ ALL - Retrieving all parking lots...
+Found 2 parking lots:
+   - Parking Lot G8 (West Campus)
      125/380 spots used (32.9%)
-   • Parking Lot G7 (East Campus)
+   - Parking Lot G7 (East Campus)
      342/450 spots used (76.0%)
 
-4️⃣  UPDATE - Updating occupancy for Lot G7...
-✅ Updated successfully!
+[STEP 4] UPDATE - Updating occupancy for Lot G7...
+[SUCCESS] Updated successfully!
    New occupancy: 280
 
-5️⃣  DELETE - Removing Lot G8...
-✅ Deleted: Parking Lot G8
+[STEP 5] DELETE - Removing Lot G8...
+[DELETED] Parking Lot G8
 
-6️⃣  FINAL STATE - All remaining lots:
-📊 Total lots in database: 1
-   ✓ Parking Lot G7 (East Campus) - 280/450 spots used
+[STEP 6] FINAL STATE - All remaining lots:
+Total lots in database: 1
+   - Parking Lot G7 (East Campus) - 280/450 spots used
 
-✅ Demo complete! All CRUD operations successful.
+Demo complete! All CRUD operations successful.
+```
+
+**Take a screenshot of this full output**
 ```
 
 📸 **Take a screenshot of this full output**
