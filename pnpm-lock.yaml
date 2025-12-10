@@ -134,7 +134,7 @@ importers:
         specifier: ^7.25.3
         version: 7.28.5(@babel/core@7.28.5)
       '@babel/runtime':
-        specifier: ^7.25.0
+        specifier: ^7.28.4
         version: 7.28.4
       '@react-native-community/cli':
         specifier: 20.0.0
