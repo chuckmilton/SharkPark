@@ -1,37 +1,48 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Image, Text, StyleSheet, ImageSourcePropType } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 interface HeaderProps {
-  title: string;
-  subtitle?: string;
+  logo?: ImageSourcePropType; // Image source - can be require() or URI
 }
 
-const Header: React.FC<HeaderProps> = ({ title, subtitle }) => {
+const Header: React.FC<HeaderProps> = ({ logo }) => {
+  const insets = useSafeAreaInsets();
+  
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>{title}</Text>
-      {subtitle && <Text style={styles.subtitle}>{subtitle}</Text>}
+    <View style={[styles.container, { paddingTop: insets.top }]}>
+      {logo ? (
+        <Image 
+          source={logo} 
+          style={styles.logo}
+          resizeMode="contain"
+        />
+      ) : (
+        <Text style={styles.placeholderText}>
+          🦈 SharkPark - Add logo.png to src/assets/images/
+        </Text>
+      )}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: 20,
-    paddingHorizontal: 16,
-    backgroundColor: '#1e40af',
+    paddingHorizontal: 1,
+    paddingBottom: 10,
+    backgroundColor: '#EBA91B',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
+  logo: {
+    height: 90,
+    width: 300, // Adjust based on your logo dimensions
+  },
+  placeholderText: {
+    fontSize: 16,
     color: '#ffffff',
     textAlign: 'center',
-  },
-  subtitle: {
-    fontSize: 16,
-    color: '#bfdbfe',
-    textAlign: 'center',
-    marginTop: 4,
+    fontWeight: '600',
   },
 });
 
