@@ -10,25 +10,26 @@ const HomeScreen: React.FC = () => {
   };
 
   const handleViewParks = () => {
-    // Navigate to parks list
-    console.log('Viewing parks...');
+    // Navigate to parking lots list
+    console.log('Viewing parking lots...');
   };
 
   const handleFindNearby = () => {
-    // Find nearby parks
-    console.log('Finding nearby parks...');
+    // Find nearby parking
+    console.log('Finding nearby parking...');
   };
 
   return (
     <SafeAreaView style={styles.container}>
       <Header 
         title="🦈 SharkPark" 
-        subtitle="Find and explore amazing parks"
+        subtitle="Smart parking for CSULB"
       />
       
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
         <Card title="Welcome to SharkPark!" style={styles.welcomeCard}>
           <Text style={styles.description}>
+            Smart parking solutions for CSULB students. Find available parking spots across campus using real-time data.
           </Text>
           <Button
             title="Get Started"
@@ -40,7 +41,7 @@ const HomeScreen: React.FC = () => {
         <Card title="Quick Actions">
           <View style={styles.buttonGroup}>
             <Button
-              title="Browse Parks"
+              title="View Parking Lots"
               onPress={handleViewParks}
               variant="outline"
               style={styles.actionButton}
@@ -54,9 +55,9 @@ const HomeScreen: React.FC = () => {
           </View>
         </Card>
 
-        <Card title="Featured Parks">
+        <Card title="Campus Parking">
           <Text style={styles.placeholder}>
-            🏞️ Featured parks will appear here
+            �️ Real-time parking data will appear here
           </Text>
         </Card>
       </ScrollView>
