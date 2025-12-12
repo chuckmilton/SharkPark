@@ -5,7 +5,7 @@ import { Header } from '../components';
 
 const HomeScreen: React.FC = () => {
   // eslint-disable-next-line @typescript-eslint/no-require-imports
-  const logo = require('../assets/images/SharkPark.png') as ImageSourcePropType;
+  const logo = require('../assets/images/SharkParkV3.png') as ImageSourcePropType;
   
   return (
     <View style={styles.container}>
