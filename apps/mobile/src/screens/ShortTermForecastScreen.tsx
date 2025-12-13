@@ -1,12 +1,10 @@
 import React from 'react';
-import {
-  View, Text, StyleSheet,
-  TouchableOpacity, ScrollView,
-} from 'react-native';
+import {View, Text, StyleSheet, ScrollView,} from 'react-native';
 
 import {ShortTermForecastScreenProps} from '../types/ui'
 import {getOccupancyColor} from '../utils/parkingUtils';
 import {HourlyChart} from '../components/HourlyChart';
+import {SubHeader} from '../components/Header/SubHeader';
 
 // TODO: Not reachable yet — main page navigation PENDING
 export function ShortTermForecastScreen({ lot, onBack }: ShortTermForecastScreenProps) {
@@ -67,16 +65,7 @@ export function ShortTermForecastScreen({ lot, onBack }: ShortTermForecastScreen
   return (
     <View style={styles.container}>
       {/* Top Banner */}
-      <View style={styles.header}>
-        <View style={styles.headerContent}>
-          <TouchableOpacity onPress={onBack} style={styles.backButton}>
-            <Text style={styles.backIcon}>←</Text>
-          </TouchableOpacity>
-
-          <Text style={styles.title}>Short-Term Forecast</Text>
-        </View>
-      </View>
-
+      <SubHeader title="Short-Term Forecast" onBack={onBack} />
 
       <ScrollView style={styles.scrollView}>
         {/* Event Notifications */}
@@ -116,38 +105,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f3f4f6',
-  },
-  // Banner
-  header: {
-    backgroundColor: '#EBA91B',
-    paddingHorizontal: 24,
-    paddingTop: 32,
-    paddingVertical: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: '#e5e7eb',
-  },
-
-  headerContent: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-
-  backButton: {
-    padding: 4,
-    marginRight: 16,
-  },
-
-  backIcon: {
-    fontSize: 32,
-    color: '#4b5563',
-    fontWeight: '300',
-  },
-
-  title: {
-    fontSize: 24,
-    fontWeight: '600',
-    paddingTop: 8,
-    color: '#111827',
   },
 
   scrollView: {

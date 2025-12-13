@@ -8,6 +8,7 @@ import {
 import {upcomingEvents} from '../data/mockEvents';
 import {LongTermForecastScreenProps} from '../types/ui'
 import {getOccupancyColor} from '../utils/parkingUtils';
+import { SubHeader } from '../components/Header/SubHeader';
 
 
 // TODO: Not reachable yet — main page navigation PENDING
@@ -77,15 +78,7 @@ export function LongTermForecastPage({ onBack }: LongTermForecastScreenProps) {
     <View style={styles.container}>
       <ScrollView>
         {/* Top Banner */}
-        <View style={styles.header}>
-          <View style={styles.headerContent}>
-            <TouchableOpacity onPress={onBack} style={styles.backButton}>
-              <Text style={styles.backIcon}>←</Text>
-            </TouchableOpacity>
-
-            <Text style={styles.title}>Long-Term Forecast</Text>
-          </View>
-        </View>
+        <SubHeader title="Long-Term Forecast" onBack={onBack} />
 
         {/* Upcoming Events */}
         <View style={styles.card}>
@@ -185,37 +178,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f3f4f6',
-  },
-  header: {
-    backgroundColor: '#EBA91B',
-    paddingHorizontal: 24,
-    paddingTop: 38,
-    paddingVertical: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: '#e5e7eb',
-  },
-
-  headerContent: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  backButton: {
-    padding: 4,
-    marginRight: 16,
-  },
-
-  backIcon: {
-    fontSize: 32,
-    color: '#4b5563',
-    fontWeight: '300',
-  },
-
-  title: {
-    fontSize: 24,
-    fontWeight: '600',
-    paddingTop: 8,
-    color: '#111827',
-  },
+  },  
 
   // Event Section
   card: {
