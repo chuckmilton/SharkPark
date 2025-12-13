@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
   },
   logo: {
     height: 90,
-    width: 300, // Adjust based on your logo dimensions
+    width: 170, // Adjust based on your logo dimensions
   },
   placeholderText: {
     fontSize: 16,
