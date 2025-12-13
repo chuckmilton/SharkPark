@@ -16,5 +16,5 @@ export interface Event {
 }
 
 export interface LongTermForecastScreenProps {
-  onBack: () => void;
+  onBack: () => void; // currently useless back arrow
 }
