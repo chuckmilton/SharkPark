@@ -6,7 +6,8 @@
 import React from 'react';
 import { StatusBar, useColorScheme } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import HomeScreen from './src/screens/HomeScreen';
+import { NavigationContainer } from '@react-navigation/native';
+import { MainTabNavigator } from './src/navigation';
 
 function App() {
   const isDarkMode = useColorScheme() === 'dark';
@@ -17,7 +18,9 @@ function App() {
         barStyle={isDarkMode ? 'light-content' : 'dark-content'} 
         backgroundColor="#1e40af"
       />
-      <HomeScreen />
+      <NavigationContainer>
+        <MainTabNavigator />
+      </NavigationContainer>
     </SafeAreaProvider>
   );
 }
