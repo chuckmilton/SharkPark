@@ -3,6 +3,7 @@ import {
   View, Text, StyleSheet,
   TouchableOpacity, ScrollView,
 } from 'react-native';
+
 // import {parkingLots} from '../data/mockParkingLots';
 import {upcomingEvents} from '../data/mockEvents';
 import {LongTermForecastScreenProps} from '../types/ui'
@@ -79,7 +80,7 @@ export function LongTermForecastPage({ onBack }: LongTermForecastScreenProps) {
         <View style={styles.header}>
           <View style={styles.headerContent}>
             <TouchableOpacity onPress={onBack} style={styles.backButton}>
-              <Text style={styles.backIcon}>‹</Text>
+              <Text style={styles.backIcon}>←</Text>
             </TouchableOpacity>
 
             <Text style={styles.title}>Long-Term Forecast</Text>
@@ -188,7 +189,7 @@ const styles = StyleSheet.create({
   header: {
     backgroundColor: '#EBA91B',
     paddingHorizontal: 24,
-    paddingTop: 32,
+    paddingTop: 38,
     paddingVertical: 16,
     borderBottomWidth: 1,
     borderBottomColor: '#e5e7eb',
@@ -212,6 +213,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: '600',
+    paddingTop: 8,
     color: '#111827',
   },
 
