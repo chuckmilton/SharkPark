@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { COLORS } from '../constants/theme';
 
 const SearchScreen: React.FC = () => {
   return (
@@ -16,7 +17,7 @@ const SearchScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f3f4f6',
+    backgroundColor: COLORS.lightGray,
   },
   content: {
     flex: 1,
@@ -28,13 +29,13 @@ const styles = StyleSheet.create({
     fontSize: 32,
     fontWeight: 'bold',
     fontFamily: 'System',
-    color: '#1f2937',
+    color: COLORS.black,
     marginBottom: 8,
   },
   subtitle: {
     fontSize: 16,
     fontFamily: 'System',
-    color: '#6b7280',
+    color: COLORS.gray,
     textAlign: 'center',
   },
 });
