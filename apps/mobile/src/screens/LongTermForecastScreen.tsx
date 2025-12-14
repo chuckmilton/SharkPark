@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Header } from '../components';
+import { COLORS, TYPOGRAPHY, SPACING } from '../constants/theme';
 import { upcomingEvents } from '../data/mockEvents';
 import { getOccupancyColor } from '../utils/parkingUtils';
 
@@ -171,72 +172,72 @@ const LongTermForecastScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f3f4f6',
+    backgroundColor: COLORS.lightGray,
   },
   content: {
     flex: 1,
   },
   card: {
-    backgroundColor: '#fff',
-    borderRadius: 16,
-    padding: 20,
-    margin: 24,
-    shadowColor: '#000',
+    backgroundColor: COLORS.white,
+    borderRadius: SPACING.lg,
+    padding: SPACING.xl,
+    margin: SPACING.xxxl,
+    shadowColor: COLORS.shadowDark,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 8,
     elevation: 3,
   },
   cardTitle: {
-    fontSize: 18,
-    fontWeight: '600',
-    marginBottom: 16,
-    color: '#000000ff',
+    fontSize: TYPOGRAPHY.fontSize.lg,
+    fontWeight: TYPOGRAPHY.fontWeight.semibold,
+    marginBottom: SPACING.lg,
+    color: COLORS.textFull,
   },
   eventCard: {
-    paddingVertical: 12,
+    paddingVertical: SPACING.sm,
     borderBottomWidth: 1,
-    borderBottomColor: '#ebeae5ff',
+    borderBottomColor: COLORS.borderLight,
   },
   eventName: {
-    fontSize: 14,
-    fontWeight: '600',
-    color: '#111827',
+    fontSize: TYPOGRAPHY.fontSize.sm,
+    fontWeight: TYPOGRAPHY.fontWeight.semibold,
+    color: COLORS.textPrimary,
   },
   eventDate: {
-    fontSize: 12,
-    color: '#6b7280',
-    marginVertical: 4,
+    fontSize: TYPOGRAPHY.fontSize.sm,
+    color: COLORS.gray,
+    marginVertical: SPACING.xs,
   },
   eventDescription: {
-    fontSize: 13,
-    color: '#374151',
+    fontSize: TYPOGRAPHY.fontSize.xs,
+    color: COLORS.darkGray,
   },
   calendarHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 16,
+    marginBottom: SPACING.lg,
   },
   monthTitle: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#111827',
+    fontSize: TYPOGRAPHY.fontSize.lg,
+    fontWeight: TYPOGRAPHY.fontWeight.semibold,
+    color: COLORS.textPrimary,
   },
   navIcon: {
-    fontSize: 28,
-    color: '#4b5563',
+    fontSize: TYPOGRAPHY.fontSize.xxl,
+    color: COLORS.mediumGray,
   },
   dayNamesRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 8,
+    marginBottom: SPACING.md,
   },
   dayName: {
     flex: 1,
     textAlign: 'center',
-    fontSize: 12,
-    color: '#6b7280',
+    fontSize: TYPOGRAPHY.fontSize.sm,
+    color: COLORS.gray,
   },
   calendarGrid: {
     flexDirection: 'row',
@@ -247,20 +248,20 @@ const styles = StyleSheet.create({
     aspectRatio: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 4,
+    marginBottom: SPACING.xs,
   },
   dayText: {
-    fontSize: 12,
-    color: '#111827',
+    fontSize: TYPOGRAPHY.fontSize.sm,
+    color: COLORS.textPrimary,
   },
   todayCell: {
-    backgroundColor: '#f3f4f6',
-    borderRadius: 8,
+    backgroundColor: COLORS.lightGray,
+    borderRadius: SPACING.md,
   },
   selectedCell: {
     borderWidth: 2,
-    borderColor: '#EBA91B',
-    borderRadius: 8,
+    borderColor: COLORS.primary,
+    borderRadius: SPACING.md,
   },
   eventDot: {
     position: 'absolute',
@@ -269,13 +270,13 @@ const styles = StyleSheet.create({
     width: 6,
     height: 6,
     borderRadius: 3,
-    backgroundColor: '#ef4444',
+    backgroundColor: COLORS.error,
   },
   occupancyBar: {
     width: 28,
     height: 6,
     borderRadius: 3,
-    marginTop: 4,
+    marginTop: SPACING.xs,
   },
 });
 

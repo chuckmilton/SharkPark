@@ -1,5 +1,6 @@
 // components/SubHeader.tsx
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { COLORS, TYPOGRAPHY, SPACING } from '../../constants/theme';
 
 interface SubHeaderProps {
   title: string;
@@ -7,7 +8,7 @@ interface SubHeaderProps {
   backgroundColor?: string;
 }
 
-export function SubHeader({ title, onBack, backgroundColor = '#EBA91B' }: SubHeaderProps) {
+export function SubHeader({ title, onBack, backgroundColor = COLORS.primary }: SubHeaderProps) {
   return (
     <View style={[styles.header, { backgroundColor }]}>
       <View style={styles.headerContent}>
@@ -22,29 +23,29 @@ export function SubHeader({ title, onBack, backgroundColor = '#EBA91B' }: SubHea
 
 const styles = StyleSheet.create({
   header: {
-    paddingHorizontal: 24,
-    paddingTop: 32,
-    paddingVertical: 16,
+    paddingHorizontal: SPACING.xxxl,
+    paddingTop: SPACING.xxxl,
+    paddingVertical: SPACING.lg,
     borderBottomWidth: 1,
-    borderBottomColor: '#e5e7eb',
+    borderBottomColor: COLORS.borderGray,
   },
   headerContent: {
     flexDirection: 'row',
     alignItems: 'center',
   },
   backButton: {
-    padding: 4,
-    marginRight: 16,
+    padding: SPACING.xs,
+    marginRight: SPACING.lg,
   },
   backIcon: {
-    fontSize: 32,
-    color: '#4b5563',
-    fontWeight: '300',
+    fontSize: TYPOGRAPHY.fontSize.xxxxl,
+    color: COLORS.mediumGray,
+    fontWeight: TYPOGRAPHY.fontWeight.regular,
   },
   title: {
-    fontSize: 24,
-    fontWeight: '600',
-    paddingTop: 8,
-    color: '#111827',
+    fontSize: TYPOGRAPHY.fontSize.xxl,
+    fontWeight: TYPOGRAPHY.fontWeight.semibold,
+    paddingTop: SPACING.md,
+    color: COLORS.textPrimary,
   },
 });

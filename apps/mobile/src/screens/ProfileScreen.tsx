@@ -4,7 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { SectionCard } from '../components/SectionCard';
 import { Header } from '../components';
-import { COLORS } from '../constants/theme';
+import { COLORS, TYPOGRAPHY, SPACING } from '../constants/theme';
 
 type ThemeMode = 'light' | 'dark' | 'auto';
 
@@ -127,7 +127,7 @@ const ProfileScreen: React.FC = () => {
 
         {/* Logout Button */}
         <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
-          <Icon name="log-out-outline" size={20} color="#dc2626" />
+          <Icon name="log-out-outline" size={20} color={COLORS.errorText} />
           <Text style={styles.logoutButtonText}>Logout</Text>
         </TouchableOpacity>
         </ScrollView>
@@ -145,12 +145,12 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   content: {
-    padding: 24,
-    gap: 24,
+    padding: SPACING.xxxl,
+    gap: SPACING.xxxl,
     paddingBottom: 0, // Reduced padding to prevent content cutoff above nav bar
   },
   settingsList: {
-    gap: 16,
+    gap: SPACING.lg,
   },
   settingItem: {
     flexDirection: 'row',
@@ -159,25 +159,25 @@ const styles = StyleSheet.create({
   },
   settingText: {
     flex: 1,
-    marginRight: 16,
+    marginRight: SPACING.lg,
   },
   settingLabel: {
-    fontSize: 15,
+    fontSize: TYPOGRAPHY.fontSize.md,
     color: COLORS.black,
-    marginBottom: 4,
+    marginBottom: SPACING.xs,
   },
   settingDescription: {
-    fontSize: 12,
+    fontSize: TYPOGRAPHY.fontSize.sm,
     color: COLORS.gray,
   },
   divider: {
     height: 1,
-    backgroundColor: '#e5e7eb',
+    backgroundColor: COLORS.borderGray,
   },
   toggleContainer: {
     width: 48,
     height: 24,
-    borderRadius: 12,
+    borderRadius: SPACING.lg,
     padding: 2,
     justifyContent: 'center',
   },
@@ -185,14 +185,14 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.primary,
   },
   toggleInactive: {
-    backgroundColor: '#d1d5db',
+    backgroundColor: COLORS.toggleGray,
   },
   toggleThumb: {
     width: 20,
     height: 20,
     borderRadius: 10,
     backgroundColor: COLORS.white,
-    shadowColor: '#000',
+    shadowColor: COLORS.shadowDark,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 2,
@@ -202,23 +202,23 @@ const styles = StyleSheet.create({
     transform: [{ translateX: 24 }],
   },
   themeList: {
-    gap: 12,
+    gap: SPACING.sm,
   },
   themeButton: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: 16,
-    borderRadius: 12,
+    padding: SPACING.lg,
+    borderRadius: SPACING.lg,
     borderWidth: 2,
-    borderColor: '#e5e7eb',
+    borderColor: COLORS.borderGray,
   },
   themeButtonActive: {
     borderColor: COLORS.primary,
-    backgroundColor: '#fefce8',
+    backgroundColor: COLORS.yellowLight,
   },
   themeLabel: {
-    fontSize: 15,
+    fontSize: TYPOGRAPHY.fontSize.md,
     color: COLORS.black,
   },
   selectedIndicator: {
@@ -230,19 +230,19 @@ const styles = StyleSheet.create({
   logoutButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#fef2f2',
-    padding: 16,
-    borderRadius: 12,
+    backgroundColor: COLORS.errorLight,
+    padding: SPACING.lg,
+    borderRadius: SPACING.lg, // More rounded
     borderWidth: 2,
-    borderColor: '#fecaca',
+    borderColor: COLORS.errorBorder,
     justifyContent: 'center',
-    marginTop: 8,
+    marginTop: SPACING.md,
   },
   logoutButtonText: {
-    fontSize: 15,
-    fontWeight: '600',
-    color: '#dc2626',
-    marginLeft: 8,
+    fontSize: TYPOGRAPHY.fontSize.md,
+    fontWeight: TYPOGRAPHY.fontWeight.semibold,
+    color: COLORS.errorText,
+    marginLeft: SPACING.md,
   },
 });
 

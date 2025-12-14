@@ -115,21 +115,21 @@ export function SettingScreen({ onBack }: SettingScreenProps) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f3f4f6',
+    backgroundColor: '#f5f5f5',
   },
   scrollView: {
     flex: 1,
   },
   content: {
-    padding: 24,
-    gap: 24,
+    padding: 32,
+    gap: 32,
   },
 
   // Notification Card Children
   sectionTitle: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: '600',
-    color: '#111827',
+    color: '#2C2C54',
     marginBottom: 16,
   },
   settingsList: {
@@ -145,35 +145,35 @@ const styles = StyleSheet.create({
     marginRight: 16,
   },
   settingLabel: {
-    fontSize: 15,
-    color: '#111827',
-    marginBottom: 4,
+    fontSize: 16,
+    color: '#2C2C54',
+    marginBottom: 8,
   },
   settingDescription: {
-    fontSize: 12,
-    color: '#6b7280',
+    fontSize: 14,
+    color: '#999',
   },
 
   // Toggle Switch
   toggleContainer: {
-    width: 48,
-    height: 24,
-    borderRadius: 12,
+    width: 52,
+    height: 28,
+    borderRadius: 14,
     padding: 2,
     justifyContent: 'center',
   },
   toggleActive: {
-    backgroundColor: '#FFD700',
+    backgroundColor: '#4CAF50',
   },
   toggleInactive: {
-    backgroundColor: '#d1d5db',
+    backgroundColor: '#E0E0E0',
   },
-  toggleThumb: { // toggle ball
-    width: 20,
-    height: 20,
-    borderRadius: 10,
-    backgroundColor: '#ffffff',
-    shadowColor: '#000',
+  toggleThumb: {
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    backgroundColor: '#FFFFFF',
+    shadowColor: '#000000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 2,
@@ -184,7 +184,7 @@ const styles = StyleSheet.create({
   },
   divider: {
     height: 1,
-    backgroundColor: '#e5e7eb',
+    backgroundColor: '#E5E5E5',
   },
 
   // Theme Card
@@ -196,22 +196,22 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: 16,
-    borderRadius: 12,
+    borderRadius: 8,
     borderWidth: 2,
-    borderColor: '#e5e7eb',
+    borderColor: '#E5E5E5',
   },
   themeButtonActive: {
-    borderColor: '#FFD700',
-    backgroundColor: '#fefce8',
+    borderColor: '#4CAF50',
+    backgroundColor: '#FFF9E6',
   },
   themeLabel: {
-    fontSize: 15,
-    color: '#111827',
+    fontSize: 16,
+    color: '#2C2C54',
   },
   selectedIndicator: {
-    width: 12,
-    height: 12,
-    borderRadius: 6,
-    backgroundColor: '#FFD700',
+    width: 14,
+    height: 14,
+    borderRadius: 7,
+    backgroundColor: '#4CAF50',
   },
 });

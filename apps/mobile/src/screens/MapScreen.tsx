@@ -14,6 +14,7 @@ import { parkingLots } from '../data/mockParkingLots';
 import { getOccupancyColor } from '../utils/parkingUtils';
 import { ParkingLotUI } from '../types/ui';
 import { Header } from '../components';
+import { COLORS, TYPOGRAPHY, SPACING } from '../constants/theme';
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
@@ -48,7 +49,7 @@ const InteractiveLot: React.FC<{
 // Filter button component
 const FilterButton: React.FC<{ onPress: () => void }> = ({ onPress }) => (
   <TouchableOpacity style={styles.filterButton} onPress={onPress} activeOpacity={0.8}>
-    <Icon name="filter" size={24} color="#ffffff" />
+    <Icon name="filter" size={24} color={COLORS.white} />
   </TouchableOpacity>
 );
 
@@ -123,7 +124,7 @@ const MapScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: COLORS.backgroundLight,
   },
   scrollView: {
     flex: 1,
@@ -151,8 +152,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 2,
-    borderColor: '#ffffff',
-    shadowColor: '#000',
+    borderColor: COLORS.white,
+    shadowColor: COLORS.shadowDark,
     shadowOffset: {
       width: 0,
       height: 2,
@@ -162,22 +163,22 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   lotText: {
-    color: '#ffffff',
-    fontSize: 10,
-    fontWeight: 'bold',
+    color: COLORS.white,
+    fontSize: TYPOGRAPHY.fontSize.xs,
+    fontWeight: TYPOGRAPHY.fontWeight.bold,
     textAlign: 'center',
   },
   filterButton: {
     position: 'absolute',
     bottom: 100, // Above the tab bar
-    left: 20,
+    left: SPACING.xl,
     width: 56,
     height: 56,
     borderRadius: 28,
-    backgroundColor: '#EBA91B',
+    backgroundColor: COLORS.primary,
     alignItems: 'center',
     justifyContent: 'center',
-    shadowColor: '#000',
+    shadowColor: COLORS.shadowDark,
     shadowOffset: {
       width: 0,
       height: 4,
@@ -189,12 +190,12 @@ const styles = StyleSheet.create({
   selectedLotIndicator: {
     position: 'absolute',
     bottom: 30, // Above the tab bar (similar to filter button positioning)
-    left: 20,
-    right: 20,
-    backgroundColor: '#ffffff',
-    padding: 16,
-    borderRadius: 12,
-    shadowColor: '#000',
+    left: SPACING.xl,
+    right: SPACING.xl,
+    backgroundColor: COLORS.white,
+    padding: SPACING.lg,
+    borderRadius: SPACING.sm,
+    shadowColor: COLORS.shadowDark,
     shadowOffset: {
       width: 0,
       height: 2,
@@ -204,9 +205,9 @@ const styles = StyleSheet.create({
     elevation: 4,
   },
   selectedLotText: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#1f2937',
+    fontSize: TYPOGRAPHY.fontSize.lg,
+    fontWeight: TYPOGRAPHY.fontWeight.semibold,
+    color: COLORS.textPrimary,
     textAlign: 'center',
   },
 });

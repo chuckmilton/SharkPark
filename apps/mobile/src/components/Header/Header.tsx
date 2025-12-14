@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Image, Text, StyleSheet, ImageSourcePropType } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { COLORS } from '../../constants/theme';
+import { COLORS, TYPOGRAPHY, SPACING } from '../../constants/theme';
 
 interface HeaderProps {
   logo?: ImageSourcePropType; // Image source - can be require() or URI
@@ -35,7 +35,7 @@ const Header: React.FC<HeaderProps> = ({ logo, title }) => {
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 1,
-    paddingBottom: 10,
+    paddingBottom: SPACING.md,
     backgroundColor: COLORS.primary,
     alignItems: 'center',
     justifyContent: 'center',
@@ -46,21 +46,21 @@ const styles = StyleSheet.create({
     width: 170, // Adjust based on your logo dimensions
   },
   titleText: {
-    fontSize: 24,
-    color: '#111827',
+    fontSize: TYPOGRAPHY.fontSize.xxl,
+    color: COLORS.textPrimary,
     textAlign: 'left',
-    fontWeight: 'bold',
+    fontWeight: TYPOGRAPHY.fontWeight.bold,
     fontFamily: 'System',
     alignSelf: 'flex-start',
-    paddingLeft: 24,
+    paddingLeft: SPACING.xxl,
     paddingTop: 30,
     minHeight: 90,
   },
   placeholderText: {
-    fontSize: 16,
+    fontSize: TYPOGRAPHY.fontSize.xl,
     color: COLORS.white,
     textAlign: 'center',
-    fontWeight: '600',
+    fontWeight: TYPOGRAPHY.fontWeight.semibold,
   },
 });
 

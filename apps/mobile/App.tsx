@@ -17,7 +17,7 @@ function App() {
     <SafeAreaProvider>
       <StatusBar 
         barStyle={isDarkMode ? 'light-content' : 'dark-content'} 
-        backgroundColor={COLORS.primaryDark}
+        backgroundColor={COLORS.primary}
       />
       <NavigationContainer>
         <MainTabNavigator />

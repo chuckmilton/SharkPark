@@ -3,37 +3,62 @@
 export const COLORS = {
   // Primary colors
   primary: '#EBA91B',
-  primaryDark: '#1e40af',
   
   // Neutral colors
   white: '#ffffff',
   black: '#1f2937',
   gray: '#6b7280',
   lightGray: '#f3f4f6',
+  darkGray: '#374151',
+  mediumGray: '#4b5563',
+  borderGray: '#e5e7eb',
+  toggleGray: '#d1d5db',
   
-  // Status colors
-  success: '#10b981',
-  warning: '#f59e0b',
+  // Warning colors (for events)
+  warningLight: '#fef3c7',
+  warningBorder: '#fbbf24',
+  warningText: '#78350f',
+  warningTextSecondary: '#a16207',
+  
+  // Error colors (for logout, validation)
   error: '#ef4444',
-  info: '#3b82f6',
+  errorLight: '#fef2f2',
+  errorBorder: '#fecaca',
+  errorText: '#dc2626',
+  
+  // Background colors
+  backgroundLight: '#f5f5f5',
+  yellowLight: '#fefce8',
+  
+  // Shadow
+  shadowDark: '#000',
+  
+  // Text colors
+  textPrimary: '#111827',
+  textFull: '#000000ff',
+  borderLight: '#ebeae5ff',
 } as const;
 
 export const SPACING = {
-  xs: 4,
-  sm: 8,
-  md: 16,
-  lg: 24,
-  xl: 32,
+  xs: 2,
+  sm: 4, 
+  md: 8,
+  lg: 12,
+  xl: 16,
+  xxl: 24,
+  xxxl: 32,
 } as const;
 
 export const TYPOGRAPHY = {
   fontSize: {
-    xs: 12,
-    sm: 14,
-    md: 16,
-    lg: 20,
-    xl: 24,
-    xxl: 32,
+    xs: 10,
+    sm: 12,
+    md: 14,
+    lg: 15,
+    xl: 16,
+    xxl: 24,
+    xxxl: 28,
+    xxxxl: 32,
   },
   fontWeight: {
     regular: '400' as const,

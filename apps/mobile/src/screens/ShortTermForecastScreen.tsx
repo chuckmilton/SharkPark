@@ -1,5 +1,6 @@
 import React from 'react';
 import {View, Text, StyleSheet, ScrollView,} from 'react-native';
+import { COLORS, TYPOGRAPHY, SPACING } from '../constants/theme';
 
 import {ShortTermForecastScreenProps} from '../types/ui'
 import {getOccupancyColor} from '../utils/parkingUtils';
@@ -104,7 +105,7 @@ export function ShortTermForecastScreen({ lot, onBack }: ShortTermForecastScreen
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f3f4f6',
+    backgroundColor: COLORS.lightGray,
   },
 
   scrollView: {
@@ -113,18 +114,18 @@ const styles = StyleSheet.create({
 
   // Event Card
   eventsContainer: {
-    padding: 16,
-    gap: 8,
+    padding: SPACING.lg,
+    gap: SPACING.md,
   },
 
   eventCard: {
-    backgroundColor: '#fef3c7',
+    backgroundColor: COLORS.warningLight,
     borderLeftWidth: 4,
-    borderLeftColor: '#fbbf24',
-    borderRadius: 8,
-    padding: 16,
+    borderLeftColor: COLORS.warningBorder,
+    borderRadius: SPACING.md,
+    padding: SPACING.lg,
     flexDirection: 'row',
-    gap: 12,
+    gap: SPACING.sm,
   },
 
   eventIcon: {
@@ -132,7 +133,7 @@ const styles = StyleSheet.create({
   },
   
   eventIconText: {
-    fontSize: 20,
+    fontSize: TYPOGRAPHY.fontSize.xl,
   },
   
   eventContent: {
@@ -140,57 +141,55 @@ const styles = StyleSheet.create({
   },
 
   eventName: {
-    fontSize: 14,
-    color: '#78350f',
-    fontWeight: '600',
+    fontSize: TYPOGRAPHY.fontSize.sm,
+    color: COLORS.warningText,
+    fontWeight: TYPOGRAPHY.fontWeight.semibold,
   },
 
   eventDetails: {
-    fontSize: 12,
-    color: '#a16207',
-    marginTop: 4,
+    fontSize: TYPOGRAPHY.fontSize.sm,
+    color: COLORS.warningTextSecondary,
+    marginTop: SPACING.xs,
   },
 
   eventImpact: {
-    fontSize: 12,
-    color: '#ca8a04',
-    marginTop: 4,
+    fontSize: TYPOGRAPHY.fontSize.sm,
+    color: COLORS.warningTextSecondary,
+    marginTop: SPACING.xs,
   },
 
   // Title card + Status
   lotHeaderCard: {
-    backgroundColor: '#ffffff',
-    borderRadius: 16,
-    padding: 24,
-    marginHorizontal: 16,
-    marginTop: 16,
-    shadowColor: '#000',
+    backgroundColor: COLORS.white,
+    borderRadius: SPACING.lg,
+    padding: SPACING.xxxl,
+    marginHorizontal: SPACING.lg,
+    marginTop: SPACING.lg,
+    shadowColor: COLORS.shadowDark,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 8,
     elevation: 4,
     alignItems: 'center',
-    gap: 12,
+    gap: SPACING.sm,
   },
   
   lotName: {
-    fontSize: 30,
-    color: '#111827',
-    fontWeight: '600',
+    fontSize: TYPOGRAPHY.fontSize.xxxl,
+    color: COLORS.textPrimary,
+    fontWeight: TYPOGRAPHY.fontWeight.semibold,
     textAlign: 'center',
   },
 
   statusBadge: {
-    paddingHorizontal: 24,
-    paddingVertical: 8,
-    borderRadius: 12,
+    paddingHorizontal: SPACING.xxxl,
+    paddingVertical: SPACING.md,
+    borderRadius: SPACING.sm,
   },
 
   statusBadgeText: {
-    fontSize: 20,
-    color: '#ffffff',
-    fontWeight: '600',
+    fontSize: TYPOGRAPHY.fontSize.xl,
+    color: COLORS.white,
+    fontWeight: TYPOGRAPHY.fontWeight.semibold,
   },
-
-
 });

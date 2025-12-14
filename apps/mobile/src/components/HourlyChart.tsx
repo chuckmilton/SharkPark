@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, Text, ScrollView, StyleSheet, Dimensions} from 'react-native';
 import {getOccupancyColor} from '../utils/parkingUtils';
+import { COLORS, TYPOGRAPHY, SPACING } from '../constants/theme';
 
 interface HourData {
   time: string;
@@ -73,13 +74,13 @@ export function HourlyChart({data}: HourlyChartProps) {
 
 const styles = StyleSheet.create({
   chartContainer: {
-    backgroundColor: '#ffffff',
-    borderRadius: 16,
-    padding: 24,
-    marginHorizontal: 16,
-    marginTop: 16,
-    marginBottom: 24,
-    shadowColor: '#000',
+    backgroundColor: COLORS.white,
+    borderRadius: SPACING.lg,
+    padding: SPACING.xxxl,
+    marginHorizontal: SPACING.lg,
+    marginTop: SPACING.lg,
+    marginBottom: SPACING.xxxl,
+    shadowColor: COLORS.shadowDark,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 8,
@@ -87,10 +88,10 @@ const styles = StyleSheet.create({
   },
 
   chartTitle: {
-    fontSize: 16,
-    color: '#111827',
-    fontWeight: '600',
-    marginBottom: 16,
+    fontSize: TYPOGRAPHY.fontSize.lg,
+    color: COLORS.textPrimary,
+    fontWeight: TYPOGRAPHY.fontWeight.semibold,
+    marginBottom: SPACING.lg,
   },
 
   chart: {
@@ -107,8 +108,8 @@ const styles = StyleSheet.create({
   },
 
   yAxisLabel: {
-    fontSize: 12,
-    color: '#6b7280',
+    fontSize: TYPOGRAPHY.fontSize.sm,
+    color: COLORS.gray,
     textAlign: 'right',
   },
     
@@ -137,7 +138,7 @@ const styles = StyleSheet.create({
   xAxisLabel: {
     position: 'absolute',
     bottom: -25,
-    fontSize: 10,
-    color: '#6b7280',
+    fontSize: TYPOGRAPHY.fontSize.xs,
+    color: COLORS.gray,
   },
 });

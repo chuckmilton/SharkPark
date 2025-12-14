@@ -2,7 +2,7 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { HomeScreen as LongTerm, MapScreen, ProfileScreen } from '../screens';
-import { COLORS } from '../constants/theme';
+import { COLORS, TYPOGRAPHY, SPACING } from '../constants/theme';
 import type { RootTabParamList } from '../types/navigation';
 
 const Tab = createBottomTabNavigator<RootTabParamList>();
@@ -18,14 +18,14 @@ const MainTabNavigator: React.FC = () => {
         tabBarStyle: {
           backgroundColor: COLORS.white,
           borderTopWidth: 1,
-          borderTopColor: '#e5e7eb',
-          paddingTop: 8,
+          borderTopColor: COLORS.borderGray,
+          paddingTop: SPACING.md,
           paddingBottom: 30,
           height: 90,
         },
         tabBarLabelStyle: {
-          fontSize: 12,
-          fontWeight: '600',
+          fontSize: TYPOGRAPHY.fontSize.sm,
+          fontWeight: TYPOGRAPHY.fontWeight.semibold,
         },
       }}
     >
