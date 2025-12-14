@@ -10,7 +10,7 @@
     "typecheck": "tsc --noEmit",
     "start": "react-native start",
     "test": "jest",
-    "postinstall": "cd ios && pod install && cd .."
+    "postinstall": "test -n \"$CI\" || (cd ios && pod install && cd ..)"
   },
   "dependencies": {
     "@react-native/new-app-screen": "0.82.1",
