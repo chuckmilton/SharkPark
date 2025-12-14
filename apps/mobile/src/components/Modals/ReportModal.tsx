@@ -1,0 +1,338 @@
+import { useState } from 'react';
+import {
+  View, Text, Modal,
+  TouchableOpacity, TextInput,
+  ScrollView, StyleSheet,
+} from 'react-native';
+import { Colors } from '../../constants/theme';
+
+
+interface ReportModalProps {
+  lotId: string;
+  isOpen: boolean;
+  onClose: () => void;
+  onSubmit: (report: IncidentReport) => void;
+}
+
+export interface IncidentReport {
+  lotId: string;
+  type: 'blockage' | 'crash' | 'other';
+  message: string;
+  timestamp: Date;
+}
+
+export function ReportModal({ lotId, isOpen, onClose, onSubmit }: ReportModalProps) {
+  const [selectedType, setSelectedType] = useState<'blockage' | 'crash' | 'other' | null>(null);
+  const [message, setMessage] = useState('');
+
+  const handleSubmit = () => {
+    if (!selectedType) return;
+    if (selectedType === 'other' && !message.trim()) return;
+
+    onSubmit({
+      lotId,
+      type: selectedType,
+      message,
+      timestamp: new Date(),
+    });
+
+    setSelectedType(null);
+    setMessage('');
+    onClose();
+  };
+
+  const incidentTypes = [
+    {
+      id: 'blockage' as const,
+      label: 'Blockage',
+      description: 'Road or entrance blocked',
+      icon: '🚧',
+      color: Colors.gray200,
+    },
+    {
+      id: 'crash' as const,
+      label: 'Crash',
+      description: 'Traffic accident',
+      icon: '🚗',
+      color: Colors.occupancyMedium,
+    },
+    {
+      id: 'other' as const,
+      label: 'Other',
+      description: 'Custom incident report',
+      icon: '⚠️',
+    },
+  ];
+
+  return (
+    <Modal
+      visible={isOpen}
+      transparent
+      onRequestClose={onClose}
+    >
+      <View style={styles.backdrop}>
+        <TouchableOpacity 
+          style={styles.backdropTouchable}
+          activeOpacity={1}
+          onPress={onClose}
+        />
+        
+        <View style={styles.modal}>
+          {/* Modal Header */}
+          <View style={styles.header}>
+            <View>
+              <Text style={styles.title}>Report Incident</Text>
+              <Text style={styles.subtitle}>Parking Lot {lotId}</Text>
+            </View>
+            <TouchableOpacity
+              onPress={onClose}
+              style={styles.closeButton}
+            >
+              <Text style={styles.closeButtonText}>✕</Text>
+            </TouchableOpacity>
+          </View>
+
+          {/* Modal Content */}
+          <ScrollView style={styles.content}>
+            {/* Incident Type Selection */}
+            <View style={styles.section}>
+              <Text style={styles.label}>Select Incident Type</Text>
+              <View style={styles.typeGrid}>
+                {incidentTypes.map((type) => (
+                  <TouchableOpacity
+                    key={type.id}
+                    onPress={() => setSelectedType(type.id)}
+                    style={[
+                      styles.typeButton,
+                      selectedType === type.id && styles.typeButtonSelected
+                    ]}
+                  >
+                    <View style={[styles.iconContainer, { backgroundColor: type.color }]}>
+                      <Text style={styles.icon}>{type.icon}</Text>
+                    </View>
+                    <View style={styles.typeTextContainer}>
+                      <Text style={styles.typeLabel}>{type.label}</Text>
+                      <Text style={styles.typeDescription}>{type.description}</Text>
+                    </View>
+                    <View style={[
+                      styles.radio,
+                      selectedType === type.id && styles.radioSelected
+                    ]}>
+                      {selectedType === type.id && (
+                        <View style={styles.radioDot} />
+                      )}
+                    </View>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            </View>
+
+            {/* Message Field */}
+            {selectedType === 'other' && (
+              <View style={styles.section}>
+                <Text style={styles.label}>
+                  Additional Details {selectedType === 'other' && <Text style={styles.required}>*</Text>}
+                </Text>
+                <TextInput
+                  value={message}
+                  onChangeText={setMessage}
+                  placeholder="Describe the incident..."
+                  multiline
+                  numberOfLines={4}
+                  textAlignVertical="top"
+                  style={styles.textArea}
+                />
+                <Text style={styles.helperText}>
+                  {selectedType === 'other' 
+                    ? 'Please provide details about the incident'
+                    : 'Optional: Add any additional information'
+                  }
+                </Text>
+              </View>
+            )}
+
+            {/* Submit Button */}
+            <TouchableOpacity
+              onPress={handleSubmit}
+              disabled={!selectedType || (selectedType === 'other' && !message.trim())}
+              style={[
+                styles.submitButton,
+                (!selectedType || (selectedType === 'other' && !message.trim())) && styles.submitButtonDisabled
+              ]}
+            >
+              <Text style={styles.submitButtonText}>Submit Report</Text>
+            </TouchableOpacity>
+          </ScrollView>
+        </View>
+      </View>
+    </Modal>
+  );
+}
+
+const styles = StyleSheet.create({
+  backdrop: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.6)', // low opacity
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 16,
+  },
+  backdropTouchable: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+  },
+
+  // Actual Modal
+  modal: {
+    backgroundColor: Colors.cardBackground,
+    borderRadius: 24,
+    width: '100%',
+    maxWidth: 448,
+    maxHeight: '90%',
+    overflow: 'hidden',
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 24,
+    paddingVertical: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: Colors.border,
+  },
+  title: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: Colors.text,
+  },
+  subtitle: {
+    fontSize: 14,
+    color: Colors.textSecondary,
+    marginTop: 2,
+  },
+  closeButton: {
+    padding: 8,
+    borderRadius: 20,
+  },
+  closeButtonText: {
+    fontSize: 24,
+    color: Colors.gray400,
+  },
+
+  // Modal content
+  content: {
+    paddingHorizontal: 24,
+    paddingVertical: 24,
+  },
+  section: {
+    marginBottom: 24,
+  },
+  label: {
+    fontSize: 16,
+    color: Colors.gray700,
+    marginBottom: 12,
+    fontWeight: '500',
+  },
+  required: {
+    color: Colors.occupancyHigh,
+  },
+  
+  // Indicident Type
+  typeGrid: {
+    gap: 12,
+  },
+  typeButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 16,
+    borderRadius: 16,
+    borderWidth: 2,
+    borderColor: Colors.gray200,
+    backgroundColor: 'white',
+    gap: 16,
+  },
+  typeButtonSelected: {
+    borderColor: Colors.occupancyMedium,
+    backgroundColor: 'rgba(255, 215, 0, 0.1)',
+  },
+
+  // Incident Sections
+  iconContainer: {
+    width: 48,
+    height: 48,
+    borderRadius: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  icon: {
+    fontSize: 24,
+  },
+  typeTextContainer: {
+    flex: 1,
+  },
+  typeLabel: {
+    fontSize: 16,
+    color: Colors.gray900,
+    fontWeight: '500',
+  },
+  typeDescription: {
+    fontSize: 14,
+    color: Colors.gray500,
+    marginTop: 2,
+  },
+
+  // Radio buttons
+  radio: {
+    width: 20,
+    height: 20,
+    borderRadius: 10,
+    borderWidth: 2,
+    borderColor: Colors.gray300,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  radioSelected: {
+    borderColor: Colors.occupancyMedium,
+    backgroundColor: Colors.occupancyMedium,
+  },
+  radioDot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: Colors.background,
+  },
+
+  // Additional Details Section
+  textArea: {
+    borderWidth: 2,
+    borderColor: Colors.gray300,
+    borderRadius: 12,
+    padding: 12,
+    fontSize: 16,
+    minHeight: 100,
+  },
+  helperText: {
+    fontSize: 14,
+    color: Colors.gray500,
+    marginTop: 8,
+  },
+
+  // Submit Button
+  submitButton: {
+    backgroundColor: 'black',
+    paddingVertical: 16,
+    borderRadius: 12,
+    alignItems: 'center',
+  },
+  submitButtonDisabled: {
+    opacity: 0.5,
+  },
+  submitButtonText: {
+    color: Colors.occupancyMedium,
+    fontSize: 16,
+    fontWeight: '600',
+  },
+});

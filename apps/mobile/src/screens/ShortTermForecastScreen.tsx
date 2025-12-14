@@ -1,14 +1,18 @@
 import React from 'react';
-import {View, Text, StyleSheet, ScrollView,} from 'react-native';
-
+import {View, Text, StyleSheet, ScrollView, TouchableOpacity} from 'react-native';
 import {ShortTermForecastScreenProps} from '../types/ui'
 import {getOccupancyColor} from '../utils/parkingUtils';
 import {HourlyChart} from '../components/HourlyChart';
 import {SubHeader} from '../components/Header/SubHeader';
-import { Colors, Shadow } from '../constants/themes';
+import { Colors, Shadow } from '../constants/theme';
+import { ReportModal } from '../components/Modals/ReportModal';
+
 
 // TODO: Not reachable yet — main page navigation PENDING
 export function ShortTermForecastScreen({ lot, onBack }: ShortTermForecastScreenProps) {
+  const [isReportModalOpen, setIsReportModalOpen] = React.useState(false);
+  // const [isFavorite, setIsFavorite] = React.useState(false);
+
   const generateForecast = () => {
     const hours = [];
     
@@ -67,6 +71,17 @@ export function ShortTermForecastScreen({ lot, onBack }: ShortTermForecastScreen
     <View style={styles.container}>
       {/* Top Banner */}
       <SubHeader title="Short-Term Forecast" onBack={onBack} />
+      
+      {/* Favorite Button */}
+      {/* <TouchableOpacity 
+        style={styles.favoriteButton}
+        onPress={() => setIsFavorite(!isFavorite)}
+        activeOpacity={0.7}
+      >
+        <Text style={styles.favoriteIcon}>
+          {isFavorite ? '⭐' : '☆'}
+        </Text>
+      </TouchableOpacity> */}
 
       <ScrollView style={styles.scrollView}>
         {/* Event Notifications */}
@@ -96,8 +111,25 @@ export function ShortTermForecastScreen({ lot, onBack }: ShortTermForecastScreen
         </View>
 
         {/* Chart */}
-        <HourlyChart data={forecast}/>
+        <HourlyChart data={forecast}/> 
       </ScrollView>
+
+      {/* Report Button */}
+        <TouchableOpacity 
+          style={styles.fab}
+          onPress={() => setIsReportModalOpen(true)}
+          activeOpacity={0.8}
+        >
+        <Text style={styles.fabIcon}>⚠️</Text>
+        </TouchableOpacity>
+
+        {/* Incident Report Modal */}
+        <ReportModal
+          lotId={lot.id}
+          isOpen={isReportModalOpen}
+          onClose={() => setIsReportModalOpen(false)}
+          onSubmit={() => {}} // currently do nothing on submit
+        />      
     </View>
   );
 }
@@ -177,6 +209,35 @@ const styles = StyleSheet.create({
     color: Colors.cardBackground,
     fontWeight: '600',
   },
+  
+  // Report Button
+  fab: {
+    position: 'absolute',
+    bottom: 30,
+    left: 24,
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+    backgroundColor: Colors.occupancyHigh,
+    justifyContent: 'center',
+    alignItems: 'center',    
+    elevation: 3,
+  },
+  fabIcon: {
+    fontSize: 24,
+    textAlign: 'center',
+    lineHeight: 24,
+  },
 
-
+  // // Favorite Button
+  // favoriteButton: {
+  //   position: 'absolute',
+  //   top: 40, // Adjust based on your SubHeader height
+  //   right: 16,
+  //   padding: 8,
+  //   zIndex: 10,
+  // },
+  // favoriteIcon: {
+  //   fontSize: 24,
+  // },
 });
