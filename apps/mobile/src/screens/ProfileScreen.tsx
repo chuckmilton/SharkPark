@@ -4,6 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { SectionCard } from '../components/SectionCard';
 import { Header } from '../components';
+import { COLORS } from '../constants/theme';
 
 type ThemeMode = 'light' | 'dark' | 'auto';
 
@@ -138,7 +139,7 @@ const ProfileScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f3f4f6',
+    backgroundColor: COLORS.lightGray,
   },
   scrollView: {
     flex: 1,
@@ -162,12 +163,12 @@ const styles = StyleSheet.create({
   },
   settingLabel: {
     fontSize: 15,
-    color: '#111827',
+    color: COLORS.black,
     marginBottom: 4,
   },
   settingDescription: {
     fontSize: 12,
-    color: '#6b7280',
+    color: COLORS.gray,
   },
   divider: {
     height: 1,
@@ -181,7 +182,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   toggleActive: {
-    backgroundColor: '#FFD700',
+    backgroundColor: COLORS.primary,
   },
   toggleInactive: {
     backgroundColor: '#d1d5db',
@@ -190,7 +191,7 @@ const styles = StyleSheet.create({
     width: 20,
     height: 20,
     borderRadius: 10,
-    backgroundColor: '#ffffff',
+    backgroundColor: COLORS.white,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
@@ -213,18 +214,18 @@ const styles = StyleSheet.create({
     borderColor: '#e5e7eb',
   },
   themeButtonActive: {
-    borderColor: '#FFD700',
+    borderColor: COLORS.primary,
     backgroundColor: '#fefce8',
   },
   themeLabel: {
     fontSize: 15,
-    color: '#111827',
+    color: COLORS.black,
   },
   selectedIndicator: {
     width: 12,
     height: 12,
     borderRadius: 6,
-    backgroundColor: '#FFD700',
+    backgroundColor: COLORS.primary,
   },
   logoutButton: {
     flexDirection: 'row',
@@ -235,7 +236,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: '#fecaca',
     justifyContent: 'center',
-    marginTop: 8, // Consistent with other gaps
+    marginTop: 8,
   },
   logoutButtonText: {
     fontSize: 15,

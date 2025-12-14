@@ -2,8 +2,10 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { HomeScreen as LongTerm, MapScreen, ProfileScreen } from '../screens';
+import { COLORS } from '../constants/theme';
+import type { RootTabParamList } from '../types/navigation';
 
-const Tab = createBottomTabNavigator();
+const Tab = createBottomTabNavigator<RootTabParamList>();
 
 const MainTabNavigator: React.FC = () => {
   return (
@@ -11,10 +13,10 @@ const MainTabNavigator: React.FC = () => {
       initialRouteName="Map"
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: '#EBA91B',
-        tabBarInactiveTintColor: '#6b7280',
+        tabBarActiveTintColor: COLORS.primary,
+        tabBarInactiveTintColor: COLORS.gray,
         tabBarStyle: {
-          backgroundColor: '#ffffff',
+          backgroundColor: COLORS.white,
           borderTopWidth: 1,
           borderTopColor: '#e5e7eb',
           paddingTop: 8,
