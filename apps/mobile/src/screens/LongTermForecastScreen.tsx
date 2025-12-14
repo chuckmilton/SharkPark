@@ -9,7 +9,7 @@ import {upcomingEvents} from '../data/mockEvents';
 import {LongTermForecastScreenProps} from '../types/ui'
 import {getOccupancyColor} from '../utils/parkingUtils';
 import { SubHeader } from '../components/Header/SubHeader';
-import { Colors, Shadow } from '../constants/themes';
+import { Colors, Shadow } from '../constants/theme';
 
 
 // TODO: Not reachable yet — main page navigation PENDING

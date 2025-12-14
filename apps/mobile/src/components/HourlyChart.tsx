@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text, ScrollView, StyleSheet, Dimensions} from 'react-native';
 import {getOccupancyColor} from '../utils/parkingUtils';
-import { Colors, Shadow } from '../constants/themes';
+import { Colors, Shadow } from '../constants/theme';
 
 interface HourData {
   time: string;

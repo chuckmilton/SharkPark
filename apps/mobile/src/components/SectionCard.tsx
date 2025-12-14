@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, ViewStyle } from 'react-native';
 import { ReactNode } from 'react';
-import { Colors, Shadow} from '../constants/themes'
+import { Colors, Shadow} from '../constants/theme'
 
 
 interface SectionCardProps {

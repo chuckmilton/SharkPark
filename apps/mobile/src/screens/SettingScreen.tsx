@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { View, Text, TouchableOpacity, ScrollView, StyleSheet } from 'react-native';
 import { SubHeader } from '../components/Header/SubHeader';
 import { SectionCard } from '../components/SectionCard';
-import { Colors, Shadow} from '../constants/themes'
+import { Colors, Shadow} from '../constants/theme'
 
 
 interface SettingScreenProps {
