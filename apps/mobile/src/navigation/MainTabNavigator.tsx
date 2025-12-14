@@ -2,20 +2,22 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { HomeScreen, SearchScreen, ProfileScreen } from '../screens';
+import { COLORS } from '../constants/theme';
+import type { RootTabParamList } from '../types/navigation';
 
-const Tab = createBottomTabNavigator();
+const Tab = createBottomTabNavigator<RootTabParamList>();
 
 const MainTabNavigator: React.FC = () => {
   return (
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: '#EBA91B',
-        tabBarInactiveTintColor: '#6b7280',
+        tabBarActiveTintColor: COLORS.primary,
+        tabBarInactiveTintColor: COLORS.gray,
         tabBarStyle: {
-          backgroundColor: '#ffffff',
+          backgroundColor: COLORS.white,
           borderTopWidth: 1,
-          borderTopColor: '#e5e7eb',
+          borderTopColor: COLORS.gray200,
           paddingTop: 8,
           paddingBottom: 30,
           height: 90,

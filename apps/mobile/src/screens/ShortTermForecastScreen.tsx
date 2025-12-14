@@ -4,7 +4,7 @@ import {ShortTermForecastScreenProps} from '../types/ui'
 import {getOccupancyColor} from '../utils/parkingUtils';
 import {HourlyChart} from '../components/HourlyChart';
 import {SubHeader} from '../components/Header/SubHeader';
-import { Colors, Shadow } from '../constants/theme';
+import { COLORS, Shadow } from '../constants/theme';
 import { ReportModal } from '../components/Modals/ReportModal';
 
 
@@ -137,7 +137,7 @@ export function ShortTermForecastScreen({ lot, onBack }: ShortTermForecastScreen
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.background,
+    backgroundColor: COLORS.background,
   },
   scrollView: {
     flex: 1,
@@ -149,9 +149,9 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   eventCard: {
-    backgroundColor: Colors.eventBackground,
+    backgroundColor: COLORS.eventBackground,
     borderLeftWidth: 4,
-    borderLeftColor: Colors.eventBorder,
+    borderLeftColor: COLORS.eventBorder,
     borderRadius: 8,
     padding: 16,
     flexDirection: 'row',
@@ -168,23 +168,23 @@ const styles = StyleSheet.create({
   },
   eventName: {
     fontSize: 14,
-    color: Colors.eventName,
+    color: COLORS.eventName,
     fontWeight: '600',
   },
   eventDetails: {
     fontSize: 12,
-    color: Colors.eventDetails,
+    color: COLORS.eventDetails,
     marginTop: 4,
   },
   eventImpact: {
     fontSize: 12,
-    color: Colors.eventImpact,
+    color: COLORS.eventImpact,
     marginTop: 4,
   },
 
   // Title card + Status
   lotHeaderCard: {
-    backgroundColor: Colors.cardBackground,
+    backgroundColor: COLORS.cardBackground,
     borderRadius: 16,
     padding: 24,
     marginHorizontal: 16,
@@ -195,7 +195,7 @@ const styles = StyleSheet.create({
   },  
   lotName: {
     fontSize: 30,
-    color: Colors.text,
+    color: COLORS.text,
     fontWeight: '600',
     textAlign: 'center',
   },
@@ -206,7 +206,7 @@ const styles = StyleSheet.create({
   },
   statusBadgeText: {
     fontSize: 20,
-    color: Colors.cardBackground,
+    color: COLORS.cardBackground,
     fontWeight: '600',
   },
   
@@ -218,7 +218,7 @@ const styles = StyleSheet.create({
     width: 56,
     height: 56,
     borderRadius: 28,
-    backgroundColor: Colors.occupancyHigh,
+    backgroundColor: COLORS.occupancyHigh,
     justifyContent: 'center',
     alignItems: 'center',    
     elevation: 3,

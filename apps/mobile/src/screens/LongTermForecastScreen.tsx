@@ -9,7 +9,7 @@ import {upcomingEvents} from '../data/mockEvents';
 import {LongTermForecastScreenProps} from '../types/ui'
 import {getOccupancyColor} from '../utils/parkingUtils';
 import { SubHeader } from '../components/Header/SubHeader';
-import { Colors, Shadow } from '../constants/theme';
+import { COLORS, Shadow } from '../constants/theme';
 
 
 // TODO: Not reachable yet — main page navigation PENDING
@@ -178,12 +178,12 @@ export function LongTermForecastPage({ onBack }: LongTermForecastScreenProps) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.background,
+    backgroundColor: COLORS.background,
   },  
 
   // Event Section
   card: {
-    backgroundColor: Colors.cardBackground,
+    backgroundColor: COLORS.cardBackground,
     borderRadius: 16,
     padding: 20,
     margin: 24,
@@ -193,28 +193,28 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '600',
     marginBottom: 16,
-    color: Colors.text,
+    color: COLORS.text,
   },
 
   // Event card
   eventCard: {
     paddingVertical: 12,
     borderBottomWidth: 1,
-    borderBottomColor: Colors.eventSeparator,
+    borderBottomColor: COLORS.eventSeparator,
   },
   eventName: {
     fontSize: 14,
     fontWeight: '600',
-    color: Colors.text,
+    color: COLORS.text,
   },
   eventDate: {
     fontSize: 12,
-    color: Colors.textSecondary,
+    color: COLORS.textSecondary,
     marginVertical: 4,
   },  
   eventDescription: {
     fontSize: 13,
-    color: Colors.gray700,
+    color: COLORS.gray700,
   },
   
   // Calendar
@@ -227,11 +227,11 @@ const styles = StyleSheet.create({
   monthTitle: {
     fontSize: 16,
     fontWeight: '600',
-    color:  Colors.text,
+    color:  COLORS.text,
   },
   navIcon: {
     fontSize: 28,
-    color: Colors.gray600,
+    color: COLORS.gray600,
   },
 
   // Week day row
@@ -244,7 +244,7 @@ const styles = StyleSheet.create({
     flex: 1,
     textAlign: 'center',
     fontSize: 12,
-    color: Colors.textSecondary,
+    color: COLORS.textSecondary,
   },
 
   // Date Grid
@@ -261,15 +261,15 @@ const styles = StyleSheet.create({
   },
   dayText: {
     fontSize: 12,
-    color: Colors.text,
+    color: COLORS.text,
   },
   todayCell: {
-    backgroundColor: Colors.gray100,
+    backgroundColor: COLORS.gray100,
     borderRadius: 8,
   },
   selectedCell: {
     borderWidth: 2,
-    borderColor: Colors.primary,
+    borderColor: COLORS.primary,
     borderRadius: 8,
   },
   
@@ -281,7 +281,7 @@ const styles = StyleSheet.create({
     width: 6,
     height: 6,
     borderRadius: 3,
-    backgroundColor: Colors.occupancyHigh,
+    backgroundColor: COLORS.occupancyHigh,
   },
   occupancyBar: {
     width: 28,

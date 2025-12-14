@@ -1,7 +1,14 @@
-export const Colors = {
+export const COLORS = {
+  // Neutral colors
+  white: '#ffffff',
+  black: '#1f2937',
+  gray: '#6b7280',
+  lightGray: '#f3f4f6',
+  
   // Primary/Brand
   primary: '#EBA91B',
   primaryLight: '#FFD700',
+  primaryDark: '#1e40af',
   
   // Occupancy Colors
   occupancyLow: '#4ade80', // Green - <50%

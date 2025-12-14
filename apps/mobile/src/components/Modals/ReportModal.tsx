@@ -4,7 +4,7 @@ import {
   TouchableOpacity, TextInput,
   ScrollView, StyleSheet,
 } from 'react-native';
-import { Colors } from '../../constants/theme';
+import { COLORS } from '../../constants/theme';
 
 
 interface ReportModalProps {
@@ -47,14 +47,14 @@ export function ReportModal({ lotId, isOpen, onClose, onSubmit }: ReportModalPro
       label: 'Blockage',
       description: 'Road or entrance blocked',
       icon: '🚧',
-      color: Colors.gray200,
+      color: COLORS.gray200,
     },
     {
       id: 'crash' as const,
       label: 'Crash',
       description: 'Traffic accident',
       icon: '🚗',
-      color: Colors.occupancyMedium,
+      color: COLORS.occupancyMedium,
     },
     {
       id: 'other' as const,
@@ -187,7 +187,7 @@ const styles = StyleSheet.create({
 
   // Actual Modal
   modal: {
-    backgroundColor: Colors.cardBackground,
+    backgroundColor: COLORS.cardBackground,
     borderRadius: 24,
     width: '100%',
     maxWidth: 448,
@@ -201,16 +201,16 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     paddingVertical: 16,
     borderBottomWidth: 1,
-    borderBottomColor: Colors.border,
+    borderBottomColor: COLORS.border,
   },
   title: {
     fontSize: 18,
     fontWeight: '600',
-    color: Colors.text,
+    color: COLORS.text,
   },
   subtitle: {
     fontSize: 14,
-    color: Colors.textSecondary,
+    color: COLORS.textSecondary,
     marginTop: 2,
   },
   closeButton: {
@@ -219,7 +219,7 @@ const styles = StyleSheet.create({
   },
   closeButtonText: {
     fontSize: 24,
-    color: Colors.gray400,
+    color: COLORS.gray400,
   },
 
   // Modal content
@@ -232,12 +232,12 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 16,
-    color: Colors.gray700,
+    color: COLORS.gray700,
     marginBottom: 12,
     fontWeight: '500',
   },
   required: {
-    color: Colors.occupancyHigh,
+    color: COLORS.occupancyHigh,
   },
   
   // Indicident Type
@@ -250,12 +250,12 @@ const styles = StyleSheet.create({
     padding: 16,
     borderRadius: 16,
     borderWidth: 2,
-    borderColor: Colors.gray200,
+    borderColor: COLORS.gray200,
     backgroundColor: 'white',
     gap: 16,
   },
   typeButtonSelected: {
-    borderColor: Colors.occupancyMedium,
+    borderColor: COLORS.occupancyMedium,
     backgroundColor: 'rgba(255, 215, 0, 0.1)',
   },
 
@@ -275,12 +275,12 @@ const styles = StyleSheet.create({
   },
   typeLabel: {
     fontSize: 16,
-    color: Colors.gray900,
+    color: COLORS.gray900,
     fontWeight: '500',
   },
   typeDescription: {
     fontSize: 14,
-    color: Colors.gray500,
+    color: COLORS.gray500,
     marginTop: 2,
   },
 
@@ -290,25 +290,25 @@ const styles = StyleSheet.create({
     height: 20,
     borderRadius: 10,
     borderWidth: 2,
-    borderColor: Colors.gray300,
+    borderColor: COLORS.gray300,
     justifyContent: 'center',
     alignItems: 'center',
   },
   radioSelected: {
-    borderColor: Colors.occupancyMedium,
-    backgroundColor: Colors.occupancyMedium,
+    borderColor: COLORS.occupancyMedium,
+    backgroundColor: COLORS.occupancyMedium,
   },
   radioDot: {
     width: 8,
     height: 8,
     borderRadius: 4,
-    backgroundColor: Colors.background,
+    backgroundColor: COLORS.background,
   },
 
   // Additional Details Section
   textArea: {
     borderWidth: 2,
-    borderColor: Colors.gray300,
+    borderColor: COLORS.gray300,
     borderRadius: 12,
     padding: 12,
     fontSize: 16,
@@ -316,7 +316,7 @@ const styles = StyleSheet.create({
   },
   helperText: {
     fontSize: 14,
-    color: Colors.gray500,
+    color: COLORS.gray500,
     marginTop: 8,
   },
 
@@ -331,7 +331,7 @@ const styles = StyleSheet.create({
     opacity: 0.5,
   },
   submitButtonText: {
-    color: Colors.occupancyMedium,
+    color: COLORS.occupancyMedium,
     fontSize: 16,
     fontWeight: '600',
   },

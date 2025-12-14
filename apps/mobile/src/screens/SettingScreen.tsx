@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { View, Text, TouchableOpacity, ScrollView, StyleSheet } from 'react-native';
 import { SubHeader } from '../components/Header/SubHeader';
 import { SectionCard } from '../components/SectionCard';
-import { Colors, Shadow} from '../constants/theme'
+import { COLORS, Shadow} from '../constants/theme'
 
 
 interface SettingScreenProps {
@@ -116,7 +116,7 @@ export function SettingScreen({ onBack }: SettingScreenProps) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.background,
+    backgroundColor: COLORS.background,
   },
   scrollView: {
     flex: 1,
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 16,
     fontWeight: '600',
-    color: Colors.text,
+    color: COLORS.text,
     marginBottom: 16,
   },
   settingsList: {
@@ -147,12 +147,12 @@ const styles = StyleSheet.create({
   },
   settingLabel: {
     fontSize: 15,
-    color: Colors.text,
+    color: COLORS.text,
     marginBottom: 4,
   },
   settingDescription: {
     fontSize: 12,
-    color: Colors.textSecondary,
+    color: COLORS.textSecondary,
   },
 
   // Toggle Switch
@@ -164,16 +164,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   toggleActive: {
-    backgroundColor: Colors.toggleActive,
+    backgroundColor: COLORS.toggleActive,
   },
   toggleInactive: {
-    backgroundColor: Colors.toggleInactive,
+    backgroundColor: COLORS.toggleInactive,
   },
   toggleThumb: { // toggle ball
     width: 20,
     height: 20,
     borderRadius: 10,
-    backgroundColor: Colors.toggleThumb,
+    backgroundColor: COLORS.toggleThumb,
     ...Shadow.toggle
   },
   toggleThumbActive: {
@@ -181,7 +181,7 @@ const styles = StyleSheet.create({
   },
   divider: {
     height: 1,
-    backgroundColor: Colors.divider,
+    backgroundColor: COLORS.divider,
   },
 
   // Theme Card
@@ -195,20 +195,20 @@ const styles = StyleSheet.create({
     padding: 16,
     borderRadius: 12,
     borderWidth: 2,
-    borderColor: Colors.border,
+    borderColor: COLORS.border,
   },
   themeButtonActive: {
-    borderColor: Colors.primaryLight,
-    backgroundColor: Colors.themeActiveBackground,
+    borderColor: COLORS.primaryLight,
+    backgroundColor: COLORS.themeActiveBackground,
   },
   themeLabel: {
     fontSize: 15,
-    color: Colors.text,
+    color: COLORS.text,
   },
   selectedIndicator: {
     width: 12,
     height: 12,
     borderRadius: 6,
-    backgroundColor: Colors.themeIndicator,
+    backgroundColor: COLORS.themeIndicator,
   },
 });

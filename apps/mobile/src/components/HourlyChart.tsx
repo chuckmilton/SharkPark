@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text, ScrollView, StyleSheet, Dimensions} from 'react-native';
 import {getOccupancyColor} from '../utils/parkingUtils';
-import { Colors, Shadow } from '../constants/theme';
+import { COLORS, Shadow } from '../constants/theme';
 
 interface HourData {
   time: string;
@@ -74,7 +74,7 @@ export function HourlyChart({data}: HourlyChartProps) {
 
 const styles = StyleSheet.create({
   chartContainer: {
-    backgroundColor: Colors.cardBackground,
+    backgroundColor: COLORS.cardBackground,
     borderRadius: 16,
     padding: 24,
     marginHorizontal: 16,
@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
   },
   chartTitle: {
     fontSize: 16,
-    color:  Colors.text,
+    color:  COLORS.text,
     fontWeight: '600',
     marginBottom: 16,
   },
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
   },
   yAxisLabel: {
     fontSize: 12,
-    color: Colors.textSecondary,
+    color: COLORS.textSecondary,
     textAlign: 'right',
   },
     
@@ -130,6 +130,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: -25,
     fontSize: 10,
-    color: Colors.textSecondary,
+    color: COLORS.textSecondary,
   },
 });
