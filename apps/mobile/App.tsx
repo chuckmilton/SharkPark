@@ -8,6 +8,7 @@ import { StatusBar, useColorScheme } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
 import { MainTabNavigator } from './src/navigation';
+import { COLORS } from './src/constants/theme';
 
 function App() {
   const isDarkMode = useColorScheme() === 'dark';
@@ -16,7 +17,7 @@ function App() {
     <SafeAreaProvider>
       <StatusBar 
         barStyle={isDarkMode ? 'light-content' : 'dark-content'} 
-        backgroundColor="#1e40af"
+        backgroundColor={COLORS.primaryDark}
       />
       <NavigationContainer>
         <MainTabNavigator />

@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Image, Text, StyleSheet, ImageSourcePropType } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { COLORS } from '../../constants/theme';
 
 interface HeaderProps {
   logo?: ImageSourcePropType; // Image source - can be require() or URI
@@ -30,7 +31,7 @@ const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 1,
     paddingBottom: 10,
-    backgroundColor: '#EBA91B',
+    backgroundColor: COLORS.primary,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -40,7 +41,7 @@ const styles = StyleSheet.create({
   },
   placeholderText: {
     fontSize: 16,
-    color: '#ffffff',
+    color: COLORS.white,
     textAlign: 'center',
     fontWeight: '600',
   },
