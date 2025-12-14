@@ -175,6 +175,7 @@ export function LotFilterModal({ isOpen, onClose, selectedLots, onApplyFilter }:
   );
 }
 
+// Filter Modal Specific Style
 const styles = StyleSheet.create({
   backdrop: {
     flex: 1,

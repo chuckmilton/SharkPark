@@ -2,13 +2,14 @@ import { useState } from 'react';
 import { View, Text, TouchableOpacity, ScrollView, StyleSheet } from 'react-native';
 import { SubHeader } from '../components/Header/SubHeader';
 import { SectionCard } from '../components/SectionCard';
+import { Colors, Shadow} from '../constants/themes'
+
 
 interface SettingScreenProps {
   onBack: () => void;
 }
 
 type ThemeMode = 'light' | 'dark' | 'auto';
-
 
 // TODO: Not reachable yet — main page navigation PENDING
 export function SettingScreen({ onBack }: SettingScreenProps) {
@@ -115,7 +116,7 @@ export function SettingScreen({ onBack }: SettingScreenProps) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f3f4f6',
+    backgroundColor: Colors.background,
   },
   scrollView: {
     flex: 1,
@@ -129,7 +130,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#111827',
+    color: Colors.text,
     marginBottom: 16,
   },
   settingsList: {
@@ -146,12 +147,12 @@ const styles = StyleSheet.create({
   },
   settingLabel: {
     fontSize: 15,
-    color: '#111827',
+    color: Colors.text,
     marginBottom: 4,
   },
   settingDescription: {
     fontSize: 12,
-    color: '#6b7280',
+    color: Colors.textSecondary,
   },
 
   // Toggle Switch
@@ -163,28 +164,24 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   toggleActive: {
-    backgroundColor: '#FFD700',
+    backgroundColor: Colors.toggleActive,
   },
   toggleInactive: {
-    backgroundColor: '#d1d5db',
+    backgroundColor: Colors.toggleInactive,
   },
   toggleThumb: { // toggle ball
     width: 20,
     height: 20,
     borderRadius: 10,
-    backgroundColor: '#ffffff',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 2,
-    elevation: 3,
+    backgroundColor: Colors.toggleThumb,
+    ...Shadow.toggle
   },
   toggleThumbActive: {
     transform: [{ translateX: 24 }],
   },
   divider: {
     height: 1,
-    backgroundColor: '#e5e7eb',
+    backgroundColor: Colors.divider,
   },
 
   // Theme Card
@@ -198,20 +195,20 @@ const styles = StyleSheet.create({
     padding: 16,
     borderRadius: 12,
     borderWidth: 2,
-    borderColor: '#e5e7eb',
+    borderColor: Colors.border,
   },
   themeButtonActive: {
-    borderColor: '#FFD700',
-    backgroundColor: '#fefce8',
+    borderColor: Colors.primaryLight,
+    backgroundColor: Colors.themeActiveBackground,
   },
   themeLabel: {
     fontSize: 15,
-    color: '#111827',
+    color: Colors.text,
   },
   selectedIndicator: {
     width: 12,
     height: 12,
     borderRadius: 6,
-    backgroundColor: '#FFD700',
+    backgroundColor: Colors.themeIndicator,
   },
 });

@@ -5,6 +5,7 @@ import {ShortTermForecastScreenProps} from '../types/ui'
 import {getOccupancyColor} from '../utils/parkingUtils';
 import {HourlyChart} from '../components/HourlyChart';
 import {SubHeader} from '../components/Header/SubHeader';
+import { Colors, Shadow } from '../constants/themes';
 
 // TODO: Not reachable yet — main page navigation PENDING
 export function ShortTermForecastScreen({ lot, onBack }: ShortTermForecastScreenProps) {
@@ -104,9 +105,8 @@ export function ShortTermForecastScreen({ lot, onBack }: ShortTermForecastScreen
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f3f4f6',
+    backgroundColor: Colors.background,
   },
-
   scrollView: {
     flex: 1,
   },
@@ -116,79 +116,65 @@ const styles = StyleSheet.create({
     padding: 16,
     gap: 8,
   },
-
   eventCard: {
-    backgroundColor: '#fef3c7',
+    backgroundColor: Colors.eventBackground,
     borderLeftWidth: 4,
-    borderLeftColor: '#fbbf24',
+    borderLeftColor: Colors.eventBorder,
     borderRadius: 8,
     padding: 16,
     flexDirection: 'row',
     gap: 12,
   },
-
   eventIcon: {
     marginTop: 2,
-  },
-  
+  },  
   eventIconText: {
     fontSize: 20,
-  },
-  
+  },  
   eventContent: {
     flex: 1,
   },
-
   eventName: {
     fontSize: 14,
-    color: '#78350f',
+    color: Colors.eventName,
     fontWeight: '600',
   },
-
   eventDetails: {
     fontSize: 12,
-    color: '#a16207',
+    color: Colors.eventDetails,
     marginTop: 4,
   },
-
   eventImpact: {
     fontSize: 12,
-    color: '#ca8a04',
+    color: Colors.eventImpact,
     marginTop: 4,
   },
 
   // Title card + Status
   lotHeaderCard: {
-    backgroundColor: '#ffffff',
+    backgroundColor: Colors.cardBackground,
     borderRadius: 16,
     padding: 24,
     marginHorizontal: 16,
     marginTop: 16,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
-    elevation: 4,
+    ...Shadow.lg,
     alignItems: 'center',
     gap: 12,
-  },
-  
+  },  
   lotName: {
     fontSize: 30,
-    color: '#111827',
+    color: Colors.text,
     fontWeight: '600',
     textAlign: 'center',
   },
-
   statusBadge: {
     paddingHorizontal: 24,
     paddingVertical: 8,
     borderRadius: 12,
   },
-
   statusBadgeText: {
     fontSize: 20,
-    color: '#ffffff',
+    color: Colors.cardBackground,
     fontWeight: '600',
   },
 

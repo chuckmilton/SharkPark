@@ -1,5 +1,7 @@
 import { View, Text, StyleSheet, ViewStyle } from 'react-native';
 import { ReactNode } from 'react';
+import { Colors, Shadow} from '../constants/themes'
+
 
 interface SectionCardProps {
   title: string;
@@ -18,21 +20,17 @@ export function SectionCard({ title, children, style }: SectionCardProps) {
 
 const styles = StyleSheet.create({
   section: {
-    backgroundColor: '#ffffff',
+    backgroundColor: Colors.cardBackground,
     borderRadius: 16,
     padding: 24,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.05,
-    shadowRadius: 2,
-    elevation: 1,
+    ...Shadow.sm,
     marginBottom: 24,
   },
   
   sectionTitle: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#111827',
+    color: Colors.text,
     marginBottom: 16,
   },
 });

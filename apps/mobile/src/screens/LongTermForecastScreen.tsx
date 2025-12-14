@@ -9,6 +9,7 @@ import {upcomingEvents} from '../data/mockEvents';
 import {LongTermForecastScreenProps} from '../types/ui'
 import {getOccupancyColor} from '../utils/parkingUtils';
 import { SubHeader } from '../components/Header/SubHeader';
+import { Colors, Shadow } from '../constants/themes';
 
 
 // TODO: Not reachable yet — main page navigation PENDING
@@ -177,51 +178,43 @@ export function LongTermForecastPage({ onBack }: LongTermForecastScreenProps) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f3f4f6',
+    backgroundColor: Colors.background,
   },  
 
   // Event Section
   card: {
-    backgroundColor: '#fff',
+    backgroundColor: Colors.cardBackground,
     borderRadius: 16,
     padding: 20,
     margin: 24,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
-    elevation: 3,
+    ...Shadow.md,
   },
-
   cardTitle: {
     fontSize: 18,
     fontWeight: '600',
     marginBottom: 16,
-    color: '#000000ff',
+    color: Colors.text,
   },
 
   // Event card
   eventCard: {
     paddingVertical: 12,
     borderBottomWidth: 1,
-    borderBottomColor: '#ebeae5ff', // event separator
+    borderBottomColor: Colors.eventSeparator,
   },
-
   eventName: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#111827',
+    color: Colors.text,
   },
-
   eventDate: {
     fontSize: 12,
-    color: '#6b7280',
+    color: Colors.textSecondary,
     marginVertical: 4,
-  },
-  
+  },  
   eventDescription: {
     fontSize: 13,
-    color: '#374151',
+    color: Colors.gray700,
   },
   
   // Calendar
@@ -231,16 +224,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 16,
   },
-
   monthTitle: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#111827',
+    color:  Colors.text,
   },
-
   navIcon: {
     fontSize: 28,
-    color: '#4b5563',
+    color: Colors.gray600,
   },
 
   // Week day row
@@ -249,12 +240,11 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginBottom: 8,
   },
-
   dayName: {
     flex: 1,
     textAlign: 'center',
     fontSize: 12,
-    color: '#6b7280',
+    color: Colors.textSecondary,
   },
 
   // Date Grid
@@ -262,7 +252,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
   },
-
   dayCell: {
     width: `${100 / 7}%`,
     aspectRatio: 1,
@@ -270,23 +259,21 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginBottom: 4,
   },
-
   dayText: {
     fontSize: 12,
-    color: '#111827',
+    color: Colors.text,
   },
-
   todayCell: {
-    backgroundColor: '#f3f4f6',
+    backgroundColor: Colors.gray100,
     borderRadius: 8,
   },
-
   selectedCell: {
     borderWidth: 2,
-    borderColor: '#EBA91B',
+    borderColor: Colors.primary,
     borderRadius: 8,
   },
   
+  // Date cell components
   eventDot: {
     position: 'absolute',
     top: 6,
@@ -294,9 +281,8 @@ const styles = StyleSheet.create({
     width: 6,
     height: 6,
     borderRadius: 3,
-    backgroundColor: '#ef4444',
+    backgroundColor: Colors.occupancyHigh,
   },
-
   occupancyBar: {
     width: 28,
     height: 6,
