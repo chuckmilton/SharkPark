@@ -1,13 +1,14 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { HomeScreen, SearchScreen, ProfileScreen } from '../screens';
+import { HomeScreen as LongTerm, MapScreen, ProfileScreen } from '../screens';
 
 const Tab = createBottomTabNavigator();
 
 const MainTabNavigator: React.FC = () => {
   return (
     <Tab.Navigator
+      initialRouteName="Map"
       screenOptions={{
         headerShown: false,
         tabBarActiveTintColor: '#EBA91B',
@@ -27,12 +28,12 @@ const MainTabNavigator: React.FC = () => {
       }}
     >
       <Tab.Screen 
-        name="Home" 
-        component={HomeScreen}
+        name="Long Term" 
+        component={LongTerm}
         options={{
           tabBarIcon: ({ focused, color, size }) => (
             <Icon 
-              name={focused ? 'home' : 'home-outline'} 
+              name={focused ? 'bar-chart' : 'bar-chart-outline'} 
               size={size} 
               color={color} 
             />
@@ -40,12 +41,12 @@ const MainTabNavigator: React.FC = () => {
         }}
       />
       <Tab.Screen 
-        name="Search" 
-        component={SearchScreen}
+        name="Map" 
+        component={MapScreen}
         options={{
           tabBarIcon: ({ focused, color, size }) => (
             <Icon 
-              name={focused ? 'search' : 'search-outline'} 
+              name={focused ? 'map' : 'map-outline'} 
               size={size} 
               color={color} 
             />
