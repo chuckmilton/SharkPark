@@ -103,6 +103,10 @@ const MapScreen: React.FC = () => {
         scrollEnabled={true}
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
+        contentOffset={{ 
+          x: screenWidth, // Center horizontally
+          y: screenHeight   // Move down to center on the map image
+        }}
       >
         {/* Campus map background */}
         <View style={styles.mapImageContainer}>
@@ -159,8 +163,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     minHeight: screenHeight * 3, // Increase content area
     minWidth: screenWidth * 3,   // Increase content area
-    paddingHorizontal: screenWidth * 1.0, // Increased horizontal padding
-    paddingVertical: screenHeight * 0.5,  // Add vertical padding
+    paddingHorizontal: screenWidth * 0.75, // Reduced horizontal padding
+    paddingVertical: screenHeight * 0.25,  // Reduced vertical padding
   },
   mapImageContainer: {
     position: 'relative',
