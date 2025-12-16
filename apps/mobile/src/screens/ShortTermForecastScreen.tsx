@@ -1,14 +1,17 @@
 import React from 'react';
-import {View, Text, StyleSheet, ScrollView,} from 'react-native';
+import {View, Text, StyleSheet, ScrollView, TouchableOpacity} from 'react-native';
 import { COLORS, TYPOGRAPHY, SPACING } from '../constants/theme';
 
 import {ShortTermForecastScreenProps} from '../types/ui'
 import {getOccupancyColor} from '../utils/parkingUtils';
 import {HourlyChart} from '../components/HourlyChart';
 import {SubHeader} from '../components/Header/SubHeader';
+import { ReportModal } from '../components/Modals/ReportModal';
 
 // TODO: Not reachable yet — main page navigation PENDING
 export function ShortTermForecastScreen({ lot, onBack }: ShortTermForecastScreenProps) {
+  const [isReportModalOpen, setIsReportModalOpen] = React.useState(false);
+
   const generateForecast = () => {
     const hours = [];
     
@@ -98,6 +101,23 @@ export function ShortTermForecastScreen({ lot, onBack }: ShortTermForecastScreen
         {/* Chart */}
         <HourlyChart data={forecast}/>
       </ScrollView>
+
+      {/* Report Button */}
+      <TouchableOpacity 
+        style={styles.fab}
+        onPress={() => setIsReportModalOpen(true)}
+        activeOpacity={0.8}
+      >
+        <Text style={styles.fabIcon}>⚠️</Text>
+      </TouchableOpacity>
+
+      {/* Incident Report Modal */}
+      <ReportModal
+        lotId={lot.id}
+        isOpen={isReportModalOpen}
+        onClose={() => setIsReportModalOpen(false)}
+        onSubmit={() => {}} // currently do nothing on submit
+      />
     </View>
   );
 }
@@ -191,5 +211,28 @@ const styles = StyleSheet.create({
     fontSize: TYPOGRAPHY.fontSize.xl,
     color: COLORS.white,
     fontWeight: TYPOGRAPHY.fontWeight.semibold,
+  },
+
+  // Report Button
+  fab: {
+    position: 'absolute',
+    bottom: 30,
+    left: 24,
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+    backgroundColor: COLORS.error,
+    justifyContent: 'center',
+    alignItems: 'center',    
+    elevation: 3,
+    shadowColor: COLORS.shadowDark,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+  },
+  fabIcon: {
+    fontSize: 24,
+    textAlign: 'center',
+    lineHeight: 24,
   },
 });

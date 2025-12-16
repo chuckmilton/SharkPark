@@ -14,6 +14,7 @@ import { parkingLots } from '../data/mockParkingLots';
 import { getOccupancyColor } from '../utils/parkingUtils';
 import { ParkingLotUI } from '../types/ui';
 import { Header } from '../components';
+import { LotFilterModal } from '../components/Modals/FilterModal';
 import { COLORS, TYPOGRAPHY, SPACING } from '../constants/theme';
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
@@ -55,6 +56,8 @@ const FilterButton: React.FC<{ onPress: () => void }> = ({ onPress }) => (
 
 const MapScreen: React.FC = () => {
   const [selectedLot, setSelectedLot] = useState<ParkingLotUI | null>(null);
+  const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
+  const [selectedLots, setSelectedLots] = useState<string[]>([]);
   const scrollViewRef = useRef<ScrollView>(null);
 
   const handleLotPress = (lot: ParkingLotUI) => {
@@ -64,9 +67,23 @@ const MapScreen: React.FC = () => {
   };
 
   const handleFilterPress = () => {
-    // TODO: Your teammate will implement the filter modal
-    console.log('Filter button pressed');
+    setIsFilterModalOpen(true);
   };
+
+  const handleFilterClose = () => {
+    setIsFilterModalOpen(false);
+  };
+
+  const handleApplyFilter = (filteredLots: string[]) => {
+    setSelectedLots(filteredLots);
+    setIsFilterModalOpen(false);
+    console.log('Applied filter with lots:', filteredLots);
+  };
+
+  // Filter parking lots based on selected filter
+  const filteredParkingLots = selectedLots.length > 0 
+    ? parkingLots.filter(lot => selectedLots.includes(lot.id))
+    : parkingLots;
 
   return (
     <View style={styles.container}>
@@ -96,7 +113,7 @@ const MapScreen: React.FC = () => {
           />
           
           {/* Interactive parking lot circles */}
-          {parkingLots.map((lot) => (
+          {filteredParkingLots.map((lot) => (
             <InteractiveLot
               key={lot.id}
               lot={lot}
@@ -117,6 +134,14 @@ const MapScreen: React.FC = () => {
           </Text>
         </View>
       )}
+
+      {/* Filter Modal */}
+      <LotFilterModal
+        isOpen={isFilterModalOpen}
+        onClose={handleFilterClose}
+        selectedLots={selectedLots}
+        onApplyFilter={handleApplyFilter}
+      />
     </View>
   );
 };
