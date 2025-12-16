@@ -9,6 +9,8 @@ import {
   ScrollView,
   ImageSourcePropType,
 } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import type { StackNavigationProp } from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { parkingLots } from '../data/mockParkingLots';
 import { getOccupancyColor } from '../utils/parkingUtils';
@@ -16,11 +18,12 @@ import { ParkingLotUI } from '../types/ui';
 import { Header } from '../components';
 import { LotFilterModal } from '../components/Modals/FilterModal';
 import { COLORS, TYPOGRAPHY, SPACING } from '../constants/theme';
+import type { MapStackParamList } from '../types/navigation';
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
 // eslint-disable-next-line @typescript-eslint/no-require-imports
-const campusMapImage = require('../assets/images/CSULB_Map-1.png') as ImageSourcePropType;
+const campusMapImage = require('../assets/images/CSULB_map_transparent_unlabeled.png') as ImageSourcePropType;
 
 // Interactive lot component
 const InteractiveLot: React.FC<{
@@ -54,20 +57,34 @@ const FilterButton: React.FC<{ onPress: () => void }> = ({ onPress }) => (
   </TouchableOpacity>
 );
 
+// Navigate button component
+const NavigateButton: React.FC<{ onPress: () => void }> = ({ onPress }) => (
+  <TouchableOpacity style={styles.navigateButton} onPress={onPress} activeOpacity={0.8}>
+    <Icon name="navigate" size={TYPOGRAPHY.fontSize.xxl} color={COLORS.white} />
+  </TouchableOpacity>
+);
+
 const MapScreen: React.FC = () => {
-  const [selectedLot, setSelectedLot] = useState<ParkingLotUI | null>(null);
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
   const [selectedLots, setSelectedLots] = useState<string[]>([]);
   const scrollViewRef = useRef<ScrollView>(null);
+  const navigation = useNavigation<StackNavigationProp<MapStackParamList>>();
 
   const handleLotPress = (lot: ParkingLotUI) => {
-    setSelectedLot(lot);
-    // TODO: Show lot details modal or navigate to lot details
-    console.log('Selected lot:', lot.name, 'Occupancy:', lot.occupancy + '%');
+    // Navigate to ShortTermForecastScreen with lot data
+    navigation.navigate('Short Term Forecast', { 
+      lotId: lot.id, 
+      lotName: lot.name 
+    });
   };
 
   const handleFilterPress = () => {
     setIsFilterModalOpen(true);
+  };
+
+  const handleNavigatePress = () => {
+    // TODO: Add navigation logic here (e.g., open Google Maps to campus)
+    console.log('Navigate button pressed');
   };
 
   const handleFilterClose = () => {
@@ -130,14 +147,8 @@ const MapScreen: React.FC = () => {
       {/* Filter button - bottom left */}
       <FilterButton onPress={handleFilterPress} />
 
-      {/* Selected lot indicator (temporary) */}
-      {selectedLot && (
-        <View style={styles.selectedLotIndicator}>
-          <Text style={styles.selectedLotText}>
-            {selectedLot.name} - {selectedLot.occupancy}% Full
-          </Text>
-        </View>
-      )}
+      {/* Navigate button - bottom right */}
+      <NavigateButton onPress={handleNavigatePress} />
 
       {/* Filter Modal */}
       <LotFilterModal
@@ -180,12 +191,12 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     alignItems: 'center',
     justifyContent: 'center',
-    borderWidth: 2,
+    borderWidth: SPACING.xs,
     borderColor: COLORS.white,
     shadowColor: COLORS.shadowDark,
     shadowOffset: {
       width: 0,
-      height: 2,
+      height: SPACING.xs,
     },
     shadowOpacity: 0.3,
     shadowRadius: 3,
@@ -199,8 +210,8 @@ const styles = StyleSheet.create({
   },
   filterButton: {
     position: 'absolute',
-    bottom: 100, // Above the tab bar
-    left: SPACING.xl,
+    bottom: SPACING.xxl,
+    left: SPACING.xxl, // Top right position
     width: 56,
     height: 56,
     borderRadius: 28,
@@ -210,34 +221,30 @@ const styles = StyleSheet.create({
     shadowColor: COLORS.shadowDark,
     shadowOffset: {
       width: 0,
-      height: 4,
+      height: SPACING.sm,
     },
     shadowOpacity: 0.3,
     shadowRadius: 6,
     elevation: 8,
   },
-  selectedLotIndicator: {
+  navigateButton: {
     position: 'absolute',
-    bottom: 30, // Above the tab bar (similar to filter button positioning)
-    left: SPACING.xl,
-    right: SPACING.xl,
-    backgroundColor: COLORS.white,
-    padding: SPACING.lg,
-    borderRadius: SPACING.sm,
+    bottom: SPACING.xxl, // Same as filter button
+    right: SPACING.xxl, // Symmetric position on the right
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+    backgroundColor: COLORS.secondary,
+    alignItems: 'center',
+    justifyContent: 'center',
     shadowColor: COLORS.shadowDark,
     shadowOffset: {
       width: 0,
-      height: 2,
+      height: SPACING.sm,
     },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 4,
-  },
-  selectedLotText: {
-    fontSize: TYPOGRAPHY.fontSize.lg,
-    fontWeight: TYPOGRAPHY.fontWeight.semibold,
-    color: COLORS.textPrimary,
-    textAlign: 'center',
+    shadowOpacity: 0.3,
+    shadowRadius: 6,
+    elevation: 8,
   },
 });
 

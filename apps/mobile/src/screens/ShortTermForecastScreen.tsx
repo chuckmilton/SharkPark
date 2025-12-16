@@ -1,15 +1,26 @@
 import React from 'react';
 import {View, Text, StyleSheet, ScrollView, TouchableOpacity} from 'react-native';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/Ionicons';
 import { COLORS, TYPOGRAPHY, SPACING } from '../constants/theme';
+import { Header } from '../components';
 
-import {ShortTermForecastScreenProps} from '../types/ui'
 import {getOccupancyColor} from '../utils/parkingUtils';
 import {HourlyChart} from '../components/HourlyChart';
-import {SubHeader} from '../components/Header/SubHeader';
 import { ReportModal } from '../components/Modals/ReportModal';
+import { parkingLots } from '../data/mockParkingLots';
+import type { MapStackScreenProps } from '../types/navigation';
 
-// TODO: Not reachable yet — main page navigation PENDING
-export function ShortTermForecastScreen({ lot, onBack }: ShortTermForecastScreenProps) {
+// Navigation-aware component
+export function ShortTermForecastScreen() {
+  const navigation = useNavigation();
+  const route = useRoute<MapStackScreenProps<'Short Term Forecast'>['route']>();
+  const { lotId } = route.params || { lotId: 'G1' };
+  
+  // Find the lot from our data
+  const lot = parkingLots.find(l => l.id === lotId) || parkingLots[0];
+  
+  const onBack = () => navigation.goBack();
   const [isReportModalOpen, setIsReportModalOpen] = React.useState(false);
 
   const generateForecast = () => {
@@ -69,7 +80,7 @@ export function ShortTermForecastScreen({ lot, onBack }: ShortTermForecastScreen
   return (
     <View style={styles.container}>
       {/* Top Banner */}
-      <SubHeader title="Short-Term Forecast" onBack={onBack} />
+      <Header title="Short-Term Forecast" onBack={onBack}/>
 
       <ScrollView style={styles.scrollView}>
         {/* Event Notifications */}
@@ -109,6 +120,15 @@ export function ShortTermForecastScreen({ lot, onBack }: ShortTermForecastScreen
         activeOpacity={0.8}
       >
         <Text style={styles.fabIcon}>⚠️</Text>
+      </TouchableOpacity>
+
+      {/* Navigate Button (bottom right, symmetric to report button) */}
+      <TouchableOpacity
+        style={styles.fabNavigate}
+        onPress={() => { /* TODO: Add navigation logic here */ }}
+        activeOpacity={0.8}
+      >
+        <Icon name="navigate" size={TYPOGRAPHY.fontSize.xxl} color={COLORS.white} />
       </TouchableOpacity>
 
       {/* Incident Report Modal */}
@@ -186,10 +206,10 @@ const styles = StyleSheet.create({
     marginHorizontal: SPACING.lg,
     marginTop: SPACING.lg,
     shadowColor: COLORS.shadowDark,
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: { width: 0, height: SPACING.xs },
     shadowOpacity: 0.1,
     shadowRadius: 8,
-    elevation: 4,
+    elevation: SPACING.sm,
     alignItems: 'center',
     gap: SPACING.sm,
   },
@@ -216,23 +236,39 @@ const styles = StyleSheet.create({
   // Report Button
   fab: {
     position: 'absolute',
-    bottom: 30,
-    left: 24,
-    width: 56,
-    height: 56,
-    borderRadius: 28,
+    bottom: SPACING.xxl, // 30px equivalent
+    left: SPACING.xxl,
+    width: 56, // Standard FAB size
+    height: 56, // Standard FAB size
+    borderRadius: 28, // Half of width/height for circle
     backgroundColor: COLORS.error,
     justifyContent: 'center',
     alignItems: 'center',    
     elevation: 3,
     shadowColor: COLORS.shadowDark,
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: { width: 0, height: SPACING.xs },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+  },
+  fabNavigate: {
+    position: 'absolute',
+    bottom: SPACING.xxl, // Same as report button
+    right: SPACING.xxl,
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+    backgroundColor: COLORS.primary,
+    justifyContent: 'center',
+    alignItems: 'center',
+    elevation: 3,
+    shadowColor: COLORS.shadowDark,
+    shadowOffset: { width: 0, height: SPACING.xs },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
   },
   fabIcon: {
-    fontSize: 24,
+    fontSize: TYPOGRAPHY.fontSize.xxl,
     textAlign: 'center',
-    lineHeight: 24,
+    lineHeight: TYPOGRAPHY.fontSize.xxl,
   },
 });

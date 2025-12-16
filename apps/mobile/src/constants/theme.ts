@@ -3,6 +3,7 @@
 export const COLORS = {
   // Primary colors
   primary: '#EBA91B',
+  secondary: '#1e40af',
   
   // Neutral colors
   white: '#ffffff',

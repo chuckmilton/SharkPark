@@ -1,11 +1,23 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { HomeScreen as LongTerm, MapScreen, ProfileScreen } from '../screens';
+import { HomeScreen as LongTerm, MapScreen, ProfileScreen, ShortTermForecastScreen } from '../screens';
 import { COLORS, TYPOGRAPHY, SPACING } from '../constants/theme';
-import type { RootTabParamList } from '../types/navigation';
+import type { RootTabParamList, MapStackParamList } from '../types/navigation';
 
 const Tab = createBottomTabNavigator<RootTabParamList>();
+const Stack = createStackNavigator<MapStackParamList>();
+
+// Stack Navigator for Map and Short Term Forecast
+const MapStack: React.FC = () => {
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="MapMain" component={MapScreen} />
+      <Stack.Screen name="Short Term Forecast" component={ShortTermForecastScreen} />
+    </Stack.Navigator>
+  );
+};
 
 const MainTabNavigator: React.FC = () => {
   return (
@@ -20,8 +32,8 @@ const MainTabNavigator: React.FC = () => {
           borderTopWidth: 1,
           borderTopColor: COLORS.borderGray,
           paddingTop: SPACING.md,
-          paddingBottom: 30,
-          height: 90,
+          paddingBottom: SPACING.xxxl - SPACING.xs, // 30px equivalent
+          height: 90, // Tab bar specific height
         },
         tabBarLabelStyle: {
           fontSize: TYPOGRAPHY.fontSize.sm,
@@ -44,7 +56,7 @@ const MainTabNavigator: React.FC = () => {
       />
       <Tab.Screen 
         name="Map" 
-        component={MapScreen}
+        component={MapStack}
         options={{
           tabBarIcon: ({ focused, color, size }) => (
             <Icon 
