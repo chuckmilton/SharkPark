@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import {
   View,
   StyleSheet,
@@ -23,7 +23,7 @@ import type { MapStackParamList } from '../types/navigation';
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
 // eslint-disable-next-line @typescript-eslint/no-require-imports
-const campusMapImage = require('../assets/images/CSULB_map_transparent_unlabeled.png') as ImageSourcePropType;
+const campusMapImage = require('../assets/images/CSULB_map_transparent_unlabeled.webp') as ImageSourcePropType;
 
 // Interactive lot component
 const InteractiveLot: React.FC<{
@@ -67,7 +67,6 @@ const NavigateButton: React.FC<{ onPress: () => void }> = ({ onPress }) => (
 const MapScreen: React.FC = () => {
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
   const [selectedLots, setSelectedLots] = useState<string[]>([]);
-  const scrollViewRef = useRef<ScrollView>(null);
   const navigation = useNavigation<StackNavigationProp<MapStackParamList>>();
 
   const handleLotPress = (lot: ParkingLotUI) => {
@@ -84,7 +83,6 @@ const MapScreen: React.FC = () => {
 
   const handleNavigatePress = () => {
     // TODO: Add navigation logic here (e.g., open Google Maps to campus)
-    console.log('Navigate button pressed');
   };
 
   const handleFilterClose = () => {
@@ -94,7 +92,6 @@ const MapScreen: React.FC = () => {
   const handleApplyFilter = (filteredLots: string[]) => {
     setSelectedLots(filteredLots);
     setIsFilterModalOpen(false);
-    console.log('Applied filter with lots:', filteredLots);
   };
 
   // Filter parking lots based on selected filter
@@ -111,7 +108,6 @@ const MapScreen: React.FC = () => {
 
       {/* Scrollable map with zoom and pan */}
       <ScrollView
-        ref={scrollViewRef}
         style={styles.scrollView}
         contentContainerStyle={styles.mapContainer}
         minimumZoomScale={0.5}

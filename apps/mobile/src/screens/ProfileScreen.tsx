@@ -34,7 +34,6 @@ const ProfileScreen: React.FC = () => {
           style: 'destructive',
           onPress: () => {
             // TODO: Implement actual logout logic
-            console.log('Logout pressed - functionality to be implemented');
           },
         },
       ]

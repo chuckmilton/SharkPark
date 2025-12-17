@@ -4,7 +4,7 @@ import {
   TouchableOpacity, ScrollView,
   StyleSheet, Pressable,
 } from 'react-native';
-import { COLORS } from '../../constants/theme';
+import { COLORS, SPACING, TYPOGRAPHY } from '../../constants/theme';
 
 interface LotFilterModalProps {
   isOpen: boolean;
@@ -102,7 +102,12 @@ export function LotFilterModal({ isOpen, onClose, selectedLots, onApplyFilter }:
               <View style={styles.sectionHeader}>
                 <Text style={styles.sectionTitle}>General Lot</Text>
                 {/* Close (X) Button*/}
-                <TouchableOpacity onPress={onClose} style={styles.closeButton}>
+                <TouchableOpacity 
+                  onPress={onClose} 
+                  style={styles.closeButton}
+                  accessibilityLabel="Close filter modal"
+                  accessibilityRole="button"
+                >
                   <Text style={styles.closeIcon}>✕</Text>
                 </TouchableOpacity>
               </View>
@@ -112,6 +117,9 @@ export function LotFilterModal({ isOpen, onClose, selectedLots, onApplyFilter }:
                     key={lot.id}
                     onPress={() => toggleLot(lot.id)}
                     style={styles.lotButton}
+                    accessibilityLabel={`${tempSelected.includes(lot.id) ? 'Deselect' : 'Select'} general parking lot ${lot.label}`}
+                    accessibilityRole="checkbox"
+                    accessibilityState={{ checked: tempSelected.includes(lot.id) }}
                   >
                     <View style={[
                         styles.checkbox,
@@ -138,6 +146,9 @@ export function LotFilterModal({ isOpen, onClose, selectedLots, onApplyFilter }:
                     key={lot.id}
                     onPress={() => toggleLot(lot.id)}
                     style={styles.lotButton}
+                    accessibilityLabel={`${tempSelected.includes(lot.id) ? 'Deselect' : 'Select'} employee parking lot ${lot.label}`}
+                    accessibilityRole="checkbox"
+                    accessibilityState={{ checked: tempSelected.includes(lot.id) }}
                   >
                     <View style={[
                       styles.checkbox,
@@ -157,6 +168,8 @@ export function LotFilterModal({ isOpen, onClose, selectedLots, onApplyFilter }:
             <TouchableOpacity
               onPress={handleToggleAll}
               style={styles.clearButton}
+              accessibilityLabel={tempSelected.length === 0 ? 'Select all parking lots' : 'Clear all selected parking lots'}
+              accessibilityRole="button"
             >
               <Text style={styles.clearButtonText}>
                 {tempSelected.length === 0 ? 'Select All' : 'Clear All'}
@@ -166,6 +179,8 @@ export function LotFilterModal({ isOpen, onClose, selectedLots, onApplyFilter }:
             <TouchableOpacity
               onPress={handleApply}
               style={styles.applyButton}
+              accessibilityLabel="Apply selected parking lot filters"
+              accessibilityRole="button"
             >
               <Text style={styles.applyButtonText}>Apply Filter</Text>
             </TouchableOpacity>
@@ -183,7 +198,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.6)',
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 16,
+    padding: SPACING.xl,
   },
   backdropPress: {
     position: 'absolute',
@@ -194,62 +209,62 @@ const styles = StyleSheet.create({
   },
   modal: {
     backgroundColor: COLORS.white,
-    borderRadius: 16,
+    borderRadius: SPACING.xl,
     width: '100%',
     maxWidth: 448,
     maxHeight: '85%',
     overflow: 'hidden',
   },
   content: {
-    paddingHorizontal: 24,
+    paddingHorizontal: SPACING.xxl,
     paddingTop: 20,
-    paddingBottom: 16,
+    paddingBottom: SPACING.xl,
   },
   section: {
-    marginBottom: 24,
+    marginBottom: SPACING.xxl,
   },
   sectionHeader: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginBottom: 16,
+    marginBottom: SPACING.xl,
   },
   sectionTitle: {
     color: COLORS.textPrimary,
-    fontSize: 16,
-    fontWeight: '500',
+    fontSize: TYPOGRAPHY.fontSize.xl,
+    fontWeight: TYPOGRAPHY.fontWeight.medium,
   },
   sectionTitleEmployee: {
     color: COLORS.mediumGray,
-    fontSize: 16,
-    marginBottom: 16,
-    fontWeight: '500',
+    fontSize: TYPOGRAPHY.fontSize.xl,
+    marginBottom: SPACING.xl,
+    fontWeight: TYPOGRAPHY.fontWeight.medium,
   },
   closeButton: {
-    padding: 4,
-    borderRadius: 20,
+    padding: SPACING.sm,
+    borderRadius: SPACING.md,
   },
   closeIcon: {
     color: COLORS.mediumGray,
-    fontSize: 24,
-    fontWeight: '300',
+    fontSize: SPACING.xxl,
+    fontWeight: TYPOGRAPHY.fontWeight.light,
   },
   grid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: 12,
+    gap: SPACING.lg,
   },
   lotButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 8,
+    gap: SPACING.md,
     width: '30%',
   },
   checkbox: {
     width: 28,
     height: 28,
-    borderRadius: 4,
-    borderWidth: 2,
+    borderRadius: SPACING.sm,
+    borderWidth: SPACING.xs,
     borderColor: COLORS.borderGray,
     alignItems: 'center',
     justifyContent: 'center',
@@ -271,38 +286,38 @@ const styles = StyleSheet.create({
   divider: {
     borderTopWidth: 1,
     borderTopColor: COLORS.borderGray,
-    marginVertical: 24,
+    marginVertical: SPACING.xxl,
   },
   footer: {
     flexDirection: 'row',
-    gap: 12,
-    paddingHorizontal: 24,
-    paddingVertical: 16,
+    gap: SPACING.lg,
+    paddingHorizontal: SPACING.xxl,
+    paddingVertical: SPACING.xl,
     borderTopWidth: 1,
     borderTopColor: COLORS.borderGray,
   },
   clearButton: {
     flex: 1,
-    paddingVertical: 12,
+    paddingVertical: SPACING.lg,
     backgroundColor: COLORS.lightGray,
-    borderRadius: 8,
+    borderRadius: SPACING.md,
     alignItems: 'center',
   },
   clearButtonText: {
     color: COLORS.textPrimary,
-    fontSize: 16,
-    fontWeight: '500',
+    fontSize: TYPOGRAPHY.fontSize.xl,
+    fontWeight: TYPOGRAPHY.fontWeight.medium,
   },
   applyButton: {
     flex: 1,
-    paddingVertical: 12,
+    paddingVertical: SPACING.lg,
     backgroundColor: COLORS.primary,
-    borderRadius: 8,
+    borderRadius: SPACING.md,
     alignItems: 'center',
   },
   applyButtonText: {
     color: COLORS.white,
-    fontSize: 16,
-    fontWeight: '600',
+    fontSize: TYPOGRAPHY.fontSize.xl,
+    fontWeight: TYPOGRAPHY.fontWeight.semibold,
   },
 });

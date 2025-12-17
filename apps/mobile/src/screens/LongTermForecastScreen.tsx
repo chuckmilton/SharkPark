@@ -15,7 +15,7 @@ import { getOccupancyColor } from '../utils/parkingUtils';
 
 const LongTermForecastScreen: React.FC = () => {
   // eslint-disable-next-line @typescript-eslint/no-require-imports
-  const logo = require('../assets/images/SharkParkV4.png') as ImageSourcePropType;
+  const logo = require('../assets/images/SharkParkV4.webp') as ImageSourcePropType;
   
   const [currentMonth, setCurrentMonth] = React.useState(new Date());
   const [selectedDate, setSelectedDate] = React.useState<Date | null>(null);
