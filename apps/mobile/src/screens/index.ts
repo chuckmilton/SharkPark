@@ -1,3 +1,4 @@
-export { default as HomeScreen } from './HomeScreen';
-export { default as SearchScreen } from './SearchScreen';
+export { default as HomeScreen } from './LongTermForecastScreen';
 export { default as ProfileScreen } from './ProfileScreen';
+export { default as MapScreen } from './MapScreen';
+export { ShortTermForecastScreen } from './ShortTermForecastScreen';

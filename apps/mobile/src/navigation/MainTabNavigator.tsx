@@ -1,15 +1,28 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { HomeScreen, SearchScreen, ProfileScreen } from '../screens';
-import { COLORS } from '../constants/theme';
-import type { RootTabParamList } from '../types/navigation';
+import { HomeScreen as LongTerm, MapScreen, ProfileScreen, ShortTermForecastScreen } from '../screens';
+import { COLORS, TYPOGRAPHY, SPACING } from '../constants/theme';
+import type { RootTabParamList, MapStackParamList } from '../types/navigation';
 
 const Tab = createBottomTabNavigator<RootTabParamList>();
+const Stack = createStackNavigator<MapStackParamList>();
+
+// Stack Navigator for Map and Short Term Forecast
+const MapStack: React.FC = () => {
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="MapMain" component={MapScreen} />
+      <Stack.Screen name="Short Term Forecast" component={ShortTermForecastScreen} />
+    </Stack.Navigator>
+  );
+};
 
 const MainTabNavigator: React.FC = () => {
   return (
     <Tab.Navigator
+      initialRouteName="Map"
       screenOptions={{
         headerShown: false,
         tabBarActiveTintColor: COLORS.primary,
@@ -17,24 +30,24 @@ const MainTabNavigator: React.FC = () => {
         tabBarStyle: {
           backgroundColor: COLORS.white,
           borderTopWidth: 1,
-          borderTopColor: '#e5e7eb',
-          paddingTop: 8,
-          paddingBottom: 30,
-          height: 90,
+          borderTopColor: COLORS.borderGray,
+          paddingTop: SPACING.md,
+          paddingBottom: SPACING.xxxl - SPACING.xs, // 30px equivalent
+          height: 90, // Tab bar specific height
         },
         tabBarLabelStyle: {
-          fontSize: 12,
-          fontWeight: '600',
+          fontSize: TYPOGRAPHY.fontSize.sm,
+          fontWeight: TYPOGRAPHY.fontWeight.semibold,
         },
       }}
     >
       <Tab.Screen 
-        name="Home" 
-        component={HomeScreen}
+        name="Long Term" 
+        component={LongTerm}
         options={{
           tabBarIcon: ({ focused, color, size }) => (
             <Icon 
-              name={focused ? 'home' : 'home-outline'} 
+              name={focused ? 'bar-chart' : 'bar-chart-outline'} 
               size={size} 
               color={color} 
             />
@@ -42,12 +55,12 @@ const MainTabNavigator: React.FC = () => {
         }}
       />
       <Tab.Screen 
-        name="Search" 
-        component={SearchScreen}
+        name="Map" 
+        component={MapStack}
         options={{
           tabBarIcon: ({ focused, color, size }) => (
             <Icon 
-              name={focused ? 'search' : 'search-outline'} 
+              name={focused ? 'map' : 'map-outline'} 
               size={size} 
               color={color} 
             />
