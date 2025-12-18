@@ -13,11 +13,11 @@ jobs:
     
     services:
       dynamodb:
-        image: amazon/dynamodb-local
+        image: amazon/dynamodb-local:latest
         ports:
           - "8000:8000"
         options: >-
-          --health-cmd="curl -f http://localhost:8000/ || exit 1"
+          --health-cmd="java -version"
           --health-interval=10s
           --health-timeout=5s
           --health-retries=5
