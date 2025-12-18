@@ -1,7 +1,8 @@
 import React from 'react';
 import {View, Text, ScrollView, StyleSheet, Dimensions} from 'react-native';
 import {getOccupancyColor} from '../utils/parkingUtils';
-import { COLORS, TYPOGRAPHY, SPACING } from '../constants/theme';
+import { TYPOGRAPHY, SPACING } from '../constants/theme';
+import { useTheme } from '../context/ThemeContext';
 
 interface HourData {
   time: string;
@@ -15,6 +16,8 @@ interface HourlyChartProps {
 }
 
 export function HourlyChart({data}: HourlyChartProps) {
+  const { colors } = useTheme();
+  
   // Compute chart dimensions
   const chartWidth = Dimensions.get('window').width - 48;
   const chartHeight = 280;
@@ -22,17 +25,23 @@ export function HourlyChart({data}: HourlyChartProps) {
   const maxHeight = chartHeight - 40;
 
   return (
-    <View style={styles.chartContainer}>
-      <Text style={styles.chartTitle}>Hourly Occupancy Forecast</Text>
+    <View style={[
+      styles.chartContainer, 
+      { 
+        backgroundColor: colors.white, 
+        shadowColor: colors.shadowDark 
+      }
+    ]}>
+      <Text style={[styles.chartTitle, { color: colors.textPrimary }]}>Hourly Occupancy Forecast</Text>
       
       <View style={styles.chart}>
         {/* Y-axis labels */}
         <View style={styles.yAxis}>
-          <Text style={styles.yAxisLabel}>100</Text>
-          <Text style={styles.yAxisLabel}>75</Text>
-          <Text style={styles.yAxisLabel}>50</Text>
-          <Text style={styles.yAxisLabel}>25</Text>
-          <Text style={styles.yAxisLabel}>0</Text>
+          <Text style={[styles.yAxisLabel, { color: colors.gray }]}>100</Text>
+          <Text style={[styles.yAxisLabel, { color: colors.gray }]}>75</Text>
+          <Text style={[styles.yAxisLabel, { color: colors.gray }]}>50</Text>
+          <Text style={[styles.yAxisLabel, { color: colors.gray }]}>25</Text>
+          <Text style={[styles.yAxisLabel, { color: colors.gray }]}>0</Text>
         </View>
 
         {/* Chart area */}
@@ -58,7 +67,8 @@ export function HourlyChart({data}: HourlyChartProps) {
                       }]} />
                       
                       {/* X-axis label */}
-                      {index % 3 === 0 && (<Text style={styles.xAxisLabel}>{item.time}</Text>
+                      {index % 3 === 0 && (
+                        <Text style={[styles.xAxisLabel, { color: colors.gray }]}>{item.time}</Text>
                       )}
                     </View>
                   );
@@ -74,13 +84,11 @@ export function HourlyChart({data}: HourlyChartProps) {
 
 const styles = StyleSheet.create({
   chartContainer: {
-    backgroundColor: COLORS.white,
     borderRadius: SPACING.lg,
     padding: SPACING.xxxl,
     marginHorizontal: SPACING.lg,
     marginTop: SPACING.lg,
     marginBottom: SPACING.xxxl,
-    shadowColor: COLORS.shadowDark,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 8,
@@ -89,7 +97,6 @@ const styles = StyleSheet.create({
 
   chartTitle: {
     fontSize: TYPOGRAPHY.fontSize.lg,
-    color: COLORS.textPrimary,
     fontWeight: TYPOGRAPHY.fontWeight.semibold,
     marginBottom: SPACING.lg,
   },
@@ -109,7 +116,6 @@ const styles = StyleSheet.create({
 
   yAxisLabel: {
     fontSize: TYPOGRAPHY.fontSize.sm,
-    color: COLORS.gray,
     textAlign: 'right',
   },
     
@@ -139,6 +145,5 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: -25,
     fontSize: TYPOGRAPHY.fontSize.xs,
-    color: COLORS.gray,
   },
 });

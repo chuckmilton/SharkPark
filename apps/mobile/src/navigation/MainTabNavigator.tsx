@@ -3,7 +3,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { HomeScreen as LongTerm, MapScreen, ProfileScreen, ShortTermForecastScreen } from '../screens';
-import { COLORS, TYPOGRAPHY, SPACING } from '../constants/theme';
+import { TYPOGRAPHY, SPACING } from '../constants/theme';
+import { useTheme } from '../context/ThemeContext';
 import type { RootTabParamList, MapStackParamList } from '../types/navigation';
 
 const Tab = createBottomTabNavigator<RootTabParamList>();
@@ -20,17 +21,19 @@ const MapStack: React.FC = () => {
 };
 
 const MainTabNavigator: React.FC = () => {
+  const { colors } = useTheme();
+  
   return (
     <Tab.Navigator
       initialRouteName="Map"
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: COLORS.primary,
-        tabBarInactiveTintColor: COLORS.gray,
+        tabBarActiveTintColor: colors.primary,
+        tabBarInactiveTintColor: colors.gray,
         tabBarStyle: {
-          backgroundColor: COLORS.white,
+          backgroundColor: colors.white,
           borderTopWidth: 1,
-          borderTopColor: COLORS.borderGray,
+          borderTopColor: colors.borderGray,
           paddingTop: SPACING.md,
           paddingBottom: SPACING.xxxl - SPACING.xs, // 30px equivalent
           height: 90, // Tab bar specific height

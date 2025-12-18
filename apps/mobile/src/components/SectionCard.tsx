@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet, ViewStyle } from 'react-native';
 import { ReactNode } from 'react';
-import { COLORS, TYPOGRAPHY, SPACING } from '../constants/theme';
+import { TYPOGRAPHY, SPACING } from '../constants/theme';
+import { useTheme } from '../context/ThemeContext';
 
 interface SectionCardProps {
   title: string;
@@ -9,9 +10,18 @@ interface SectionCardProps {
 }
 
 export function SectionCard({ title, children, style }: SectionCardProps) {
+  const { colors } = useTheme();
+  
   return (
-    <View style={[styles.section, style]}>
-      <Text style={styles.sectionTitle}>{title}</Text>
+    <View style={[
+      styles.section, 
+      { 
+        backgroundColor: colors.white, 
+        shadowColor: colors.shadowDark 
+      }, 
+      style
+    ]}>
+      <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>{title}</Text>
       {children}
     </View>
   );
@@ -19,10 +29,8 @@ export function SectionCard({ title, children, style }: SectionCardProps) {
 
 const styles = StyleSheet.create({
   section: {
-    backgroundColor: COLORS.white,
     borderRadius: SPACING.lg,
     padding: SPACING.xxxl,
-    shadowColor: COLORS.shadowDark,
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.05,
     shadowRadius: 2,
@@ -33,7 +41,6 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: TYPOGRAPHY.fontSize.lg,
     fontWeight: TYPOGRAPHY.fontWeight.semibold,
-    color: COLORS.textPrimary,
     marginBottom: SPACING.lg,
   },
 });

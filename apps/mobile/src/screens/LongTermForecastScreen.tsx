@@ -9,11 +9,13 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Header } from '../components';
-import { COLORS, TYPOGRAPHY, SPACING } from '../constants/theme';
+import { TYPOGRAPHY, SPACING } from '../constants/theme';
+import { useTheme } from '../context/ThemeContext';
 import { upcomingEvents } from '../data/mockEvents';
 import { getOccupancyColor } from '../utils/parkingUtils';
 
 const LongTermForecastScreen: React.FC = () => {
+  const { colors } = useTheme();
   // eslint-disable-next-line @typescript-eslint/no-require-imports
   const logo = require('../assets/images/SharkParkV4.webp') as ImageSourcePropType;
   
@@ -70,7 +72,7 @@ const LongTermForecastScreen: React.FC = () => {
   };
   
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: colors.lightGray }]}>
       <Header 
         logo={logo}
       />
@@ -78,14 +80,14 @@ const LongTermForecastScreen: React.FC = () => {
       <SafeAreaView style={styles.content}>
         <ScrollView>
           {/* Upcoming Events */}
-          <View style={styles.card}>
-            <Text style={styles.cardTitle}>Upcoming Events</Text>
+          <View style={[styles.card, { backgroundColor: colors.white, shadowColor: colors.shadowDark }]}>
+            <Text style={[styles.cardTitle, { color: colors.textFull }]}>Upcoming Events</Text>
 
             {upcomingEvents.map(event => (
-              <View key={event.id} style={styles.eventCard}>
-                <Text style={styles.eventName}>{event.name}</Text>
+              <View key={event.id} style={[styles.eventCard, { borderBottomColor: colors.borderLight }]}>
+                <Text style={[styles.eventName, { color: colors.textPrimary }]}>{event.name}</Text>
 
-                <Text style={styles.eventDate}>
+                <Text style={[styles.eventDate, { color: colors.gray }]}>
                   {event.date.toLocaleDateString('en-US', {
                     weekday: 'long',
                     month: 'long',
@@ -93,7 +95,7 @@ const LongTermForecastScreen: React.FC = () => {
                   })}
                 </Text>
 
-                <Text style={styles.eventDescription}>
+                <Text style={[styles.eventDescription, { color: colors.darkGray }]}>
                   {event.description}
                 </Text>
               </View>
@@ -101,26 +103,26 @@ const LongTermForecastScreen: React.FC = () => {
           </View>
 
           {/* Calendar */}
-          <View style={styles.card}>
+          <View style={[styles.card, { backgroundColor: colors.white, shadowColor: colors.shadowDark }]}>
             {/* Calendar Header */}
             <View style={styles.calendarHeader}>
               <TouchableOpacity onPress={previousMonth}>
-                <Text style={styles.navIcon}>‹</Text>
+                <Text style={[styles.navIcon, { color: colors.mediumGray }]}>‹</Text>
               </TouchableOpacity>
 
-              <Text style={styles.monthTitle}>
+              <Text style={[styles.monthTitle, { color: colors.textPrimary }]}>
                 {monthNames[month]} {year}
               </Text>
 
               <TouchableOpacity onPress={nextMonth}>
-                <Text style={styles.navIcon}>›</Text>
+                <Text style={[styles.navIcon, { color: colors.mediumGray }]}>›</Text>
               </TouchableOpacity>
             </View>
 
             {/* Day Names */}
             <View style={styles.dayNamesRow}>
               {dayNames.map(day => (
-                <Text key={day} style={styles.dayName}>{day}</Text>
+                <Text key={day} style={[styles.dayName, { color: colors.gray }]}>{day}</Text>
               ))}
             </View>
 
@@ -146,18 +148,18 @@ const LongTermForecastScreen: React.FC = () => {
                     onPress={() => setSelectedDate(new Date(year, month, day))}
                     style={[
                       styles.dayCell,
-                      isToday(day) && styles.todayCell,
-                      isSelected && styles.selectedCell,
+                      isToday(day) && { backgroundColor: colors.lightGray, borderRadius: SPACING.md },
+                      isSelected && { borderWidth: 2, borderColor: colors.primary, borderRadius: SPACING.md },
                     ]}
                   >
-                    <Text style={styles.dayText}>{day}</Text>
+                    <Text style={[styles.dayText, { color: colors.textPrimary }]}>{day}</Text>
 
                     <View style={[ styles.occupancyBar,
                         {backgroundColor: getOccupancyColor(forecast)},
                     ]}/>
 
                     {/* Event indicator */}
-                    {hasEvent(day) && <View style={styles.eventDot} />}
+                    {hasEvent(day) && <View style={[styles.eventDot, { backgroundColor: colors.error }]} />}
                   </TouchableOpacity>
                 );
               })}
@@ -172,17 +174,14 @@ const LongTermForecastScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.lightGray,
   },
   content: {
     flex: 1,
   },
   card: {
-    backgroundColor: COLORS.white,
     borderRadius: SPACING.lg,
     padding: SPACING.xl,
     margin: SPACING.xxxl,
-    shadowColor: COLORS.shadowDark,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 8,
@@ -192,26 +191,21 @@ const styles = StyleSheet.create({
     fontSize: TYPOGRAPHY.fontSize.lg,
     fontWeight: TYPOGRAPHY.fontWeight.semibold,
     marginBottom: SPACING.lg,
-    color: COLORS.textFull,
   },
   eventCard: {
     paddingVertical: SPACING.sm,
     borderBottomWidth: 1,
-    borderBottomColor: COLORS.borderLight,
   },
   eventName: {
     fontSize: TYPOGRAPHY.fontSize.sm,
     fontWeight: TYPOGRAPHY.fontWeight.semibold,
-    color: COLORS.textPrimary,
   },
   eventDate: {
     fontSize: TYPOGRAPHY.fontSize.sm,
-    color: COLORS.gray,
     marginVertical: SPACING.xs,
   },
   eventDescription: {
     fontSize: TYPOGRAPHY.fontSize.xs,
-    color: COLORS.darkGray,
   },
   calendarHeader: {
     flexDirection: 'row',
@@ -222,11 +216,9 @@ const styles = StyleSheet.create({
   monthTitle: {
     fontSize: TYPOGRAPHY.fontSize.lg,
     fontWeight: TYPOGRAPHY.fontWeight.semibold,
-    color: COLORS.textPrimary,
   },
   navIcon: {
     fontSize: TYPOGRAPHY.fontSize.xxl,
-    color: COLORS.mediumGray,
   },
   dayNamesRow: {
     flexDirection: 'row',
@@ -237,7 +229,6 @@ const styles = StyleSheet.create({
     flex: 1,
     textAlign: 'center',
     fontSize: TYPOGRAPHY.fontSize.sm,
-    color: COLORS.gray,
   },
   calendarGrid: {
     flexDirection: 'row',
@@ -252,16 +243,6 @@ const styles = StyleSheet.create({
   },
   dayText: {
     fontSize: TYPOGRAPHY.fontSize.sm,
-    color: COLORS.textPrimary,
-  },
-  todayCell: {
-    backgroundColor: COLORS.lightGray,
-    borderRadius: SPACING.md,
-  },
-  selectedCell: {
-    borderWidth: 2,
-    borderColor: COLORS.primary,
-    borderRadius: SPACING.md,
   },
   eventDot: {
     position: 'absolute',
@@ -270,7 +251,6 @@ const styles = StyleSheet.create({
     width: 6,
     height: 6,
     borderRadius: 3,
-    backgroundColor: COLORS.error,
   },
   occupancyBar: {
     width: 28,

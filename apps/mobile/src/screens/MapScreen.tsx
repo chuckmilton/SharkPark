@@ -17,7 +17,8 @@ import { getOccupancyColor } from '../utils/parkingUtils';
 import { ParkingLotUI } from '../types/ui';
 import { Header } from '../components';
 import { LotFilterModal } from '../components/Modals/FilterModal';
-import { COLORS, TYPOGRAPHY, SPACING } from '../constants/theme';
+import { TYPOGRAPHY, SPACING } from '../constants/theme';
+import { useTheme, ThemeColors } from '../context/ThemeContext';
 import type { MapStackParamList } from '../types/navigation';
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
@@ -29,7 +30,8 @@ const campusMapImage = require('../assets/images/CSULB_map_transparent_unlabeled
 const InteractiveLot: React.FC<{
   lot: ParkingLotUI;
   onPress: (lot: ParkingLotUI) => void;
-}> = ({ lot, onPress }) => {
+  colors: ThemeColors;
+}> = ({ lot, onPress, colors }) => {
   const occupancyColor = getOccupancyColor(lot.occupancy);
   
   return (
@@ -40,31 +42,34 @@ const InteractiveLot: React.FC<{
           backgroundColor: occupancyColor,
           left: lot.position.x,
           top: lot.position.y,
+          borderColor: colors.white,
+          shadowColor: colors.shadowDark,
         }
       ]}
       onPress={() => onPress(lot)}
       activeOpacity={0.7}
     >
-      <Text style={styles.lotText}>{lot.name}</Text>
+      <Text style={[styles.lotText, { color: colors.white }]}>{lot.name}</Text>
     </TouchableOpacity>
   );
 };
 
 // Filter button component
-const FilterButton: React.FC<{ onPress: () => void }> = ({ onPress }) => (
-  <TouchableOpacity style={styles.filterButton} onPress={onPress} activeOpacity={0.8}>
-    <Icon name="filter" size={24} color={COLORS.white} />
+const FilterButton: React.FC<{ onPress: () => void; colors: ThemeColors }> = ({ onPress, colors }) => (
+  <TouchableOpacity style={[styles.filterButton, { backgroundColor: colors.primary, shadowColor: colors.shadowDark }]} onPress={onPress} activeOpacity={0.8}>
+    <Icon name="filter" size={24} color={colors.white} />
   </TouchableOpacity>
 );
 
 // Navigate button component
-const NavigateButton: React.FC<{ onPress: () => void }> = ({ onPress }) => (
-  <TouchableOpacity style={styles.navigateButton} onPress={onPress} activeOpacity={0.8}>
-    <Icon name="navigate" size={TYPOGRAPHY.fontSize.xxl} color={COLORS.white} />
+const NavigateButton: React.FC<{ onPress: () => void; colors: ThemeColors }> = ({ onPress, colors }) => (
+  <TouchableOpacity style={[styles.navigateButton, { backgroundColor: colors.secondary, shadowColor: colors.shadowDark }]} onPress={onPress} activeOpacity={0.8}>
+    <Icon name="navigate" size={TYPOGRAPHY.fontSize.xxl} color={colors.white} />
   </TouchableOpacity>
 );
 
 const MapScreen: React.FC = () => {
+  const { colors } = useTheme();
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
   const [selectedLots, setSelectedLots] = useState<string[]>([]);
   const navigation = useNavigation<StackNavigationProp<MapStackParamList>>();
@@ -100,7 +105,7 @@ const MapScreen: React.FC = () => {
     : parkingLots;
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: colors.backgroundLight }]}>
       {/* Header */}
       <Header 
         title="Map View"
@@ -135,16 +140,17 @@ const MapScreen: React.FC = () => {
               key={lot.id}
               lot={lot}
               onPress={handleLotPress}
+              colors={colors}
             />
           ))}
         </View>
       </ScrollView>
 
       {/* Filter button - bottom left */}
-      <FilterButton onPress={handleFilterPress} />
+      <FilterButton onPress={handleFilterPress} colors={colors} />
 
       {/* Navigate button - bottom right */}
-      <NavigateButton onPress={handleNavigatePress} />
+      <NavigateButton onPress={handleNavigatePress} colors={colors} />
 
       {/* Filter Modal */}
       <LotFilterModal
@@ -160,7 +166,6 @@ const MapScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.backgroundLight,
   },
   scrollView: {
     flex: 1,
@@ -188,8 +193,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: SPACING.xs,
-    borderColor: COLORS.white,
-    shadowColor: COLORS.shadowDark,
     shadowOffset: {
       width: 0,
       height: SPACING.xs,
@@ -199,7 +202,6 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   lotText: {
-    color: COLORS.white,
     fontSize: TYPOGRAPHY.fontSize.xs,
     fontWeight: TYPOGRAPHY.fontWeight.bold,
     textAlign: 'center',
@@ -211,10 +213,8 @@ const styles = StyleSheet.create({
     width: 56,
     height: 56,
     borderRadius: 28,
-    backgroundColor: COLORS.primary,
     alignItems: 'center',
     justifyContent: 'center',
-    shadowColor: COLORS.shadowDark,
     shadowOffset: {
       width: 0,
       height: SPACING.sm,
@@ -230,10 +230,8 @@ const styles = StyleSheet.create({
     width: 56,
     height: 56,
     borderRadius: 28,
-    backgroundColor: COLORS.secondary,
     alignItems: 'center',
     justifyContent: 'center',
-    shadowColor: COLORS.shadowDark,
     shadowOffset: {
       width: 0,
       height: SPACING.sm,

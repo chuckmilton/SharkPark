@@ -1,7 +1,8 @@
 import React from 'react';
 import { View, Image, Text, StyleSheet, ImageSourcePropType, TouchableOpacity } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { COLORS, TYPOGRAPHY, SPACING } from '../../constants/theme';
+import { TYPOGRAPHY, SPACING } from '../../constants/theme';
+import { useTheme } from '../../context/ThemeContext';
 
 interface HeaderProps {
   logo?: ImageSourcePropType; // Image source - can be require() or URI
@@ -9,20 +10,22 @@ interface HeaderProps {
   onBack?: () => void; // Optional back navigation function
 }
 
-const Header: React.FC<HeaderProps> = ({ logo, title, onBack }) => {
+const Header: React.FC<HeaderProps> = React.memo(({ logo, title, onBack }) => {
+  // Always call hooks in the same order
+  const { colors } = useTheme();
   const insets = useSafeAreaInsets();
   
   return (
-    <View style={[styles.container, { paddingTop: insets.top }]}>
+    <View style={[styles.container, { paddingTop: insets.top, backgroundColor: colors.primary }]}>
       {onBack && (
         <TouchableOpacity onPress={onBack} style={styles.backButton}>
-          <Text style={styles.backIcon}>←</Text>
+          <Text style={[styles.backIcon, { color: colors.black }]}>←</Text>
         </TouchableOpacity>
       )}
       
       <View style={styles.centerContent}>
         {title ? (
-          <Text style={styles.titleText}>
+          <Text style={[styles.titleText, { color: colors.textPrimary }]}>
             {title}
           </Text>
         ) : logo ? (
@@ -32,7 +35,7 @@ const Header: React.FC<HeaderProps> = ({ logo, title, onBack }) => {
             resizeMode="contain"
           />
         ) : (
-          <Text style={styles.placeholderText}>
+          <Text style={[styles.placeholderText, { color: colors.white }]}>
             🦈 SharkPark - Add logo.png to src/assets/images/
           </Text>
         )}
@@ -42,13 +45,14 @@ const Header: React.FC<HeaderProps> = ({ logo, title, onBack }) => {
       {onBack && <View style={styles.placeholder} />}
     </View>
   );
-};
+});
+
+Header.displayName = 'Header';
 
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: SPACING.md,
     paddingBottom: SPACING.md,
-    backgroundColor: COLORS.primary,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -63,7 +67,6 @@ const styles = StyleSheet.create({
   },
   backIcon: {
     fontSize: TYPOGRAPHY.fontSize.xxxl,
-    color: COLORS.black,
     fontWeight: TYPOGRAPHY.fontWeight.bold,
   },
   centerContent: {
@@ -78,7 +81,6 @@ const styles = StyleSheet.create({
   },
   titleText: {
     fontSize: TYPOGRAPHY.fontSize.xxl,
-    color: COLORS.textPrimary,
     textAlign: 'left',
     fontWeight: TYPOGRAPHY.fontWeight.bold,
     fontFamily: 'System',
@@ -89,7 +91,6 @@ const styles = StyleSheet.create({
   },
   placeholderText: {
     fontSize: TYPOGRAPHY.fontSize.xl,
-    color: COLORS.white,
     textAlign: 'center',
     fontWeight: TYPOGRAPHY.fontWeight.semibold,
   },
