@@ -3,26 +3,67 @@
  * @format
  */
 
-import React from 'react';
-import { StatusBar, useColorScheme } from 'react-native';
+import React, { useState } from 'react';
+import { StatusBar } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import { MainTabNavigator } from './src/navigation';
-import { COLORS } from './src/constants/theme';
+import { ThemeProvider, useTheme } from './src/context/ThemeContext';
+import { LoginFlow } from './src/screens';
 
-function App() {
-  const isDarkMode = useColorScheme() === 'dark';
+function AppContent() {
+  const { isDark, colors } = useTheme();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
+  // Create custom navigation theme based on our theme colors
+  const navigationTheme = {
+    ...(isDark ? DarkTheme : DefaultTheme),
+    colors: {
+      ...(isDark ? DarkTheme.colors : DefaultTheme.colors),
+      primary: colors.primary,
+      background: colors.lightGray,
+      card: colors.white,
+      text: colors.textPrimary,
+      border: colors.borderGray,
+    },
+  };
+
+  const handleLoginSuccess = () => {
+    setIsAuthenticated(true);
+  };
+
+  // Show login flow if not authenticated
+  if (!isAuthenticated) {
+    return (
+      <SafeAreaProvider>
+        <StatusBar 
+          barStyle={isDark ? 'light-content' : 'dark-content'} 
+          backgroundColor={colors.primary}
+        />
+        <LoginFlow onLoginSuccess={handleLoginSuccess} />
+      </SafeAreaProvider>
+    );
+  }
+
+  // Show main app if authenticated
   return (
     <SafeAreaProvider>
       <StatusBar 
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'} 
-        backgroundColor={COLORS.primaryDark}
+        barStyle={isDark ? 'light-content' : 'dark-content'} 
+        backgroundColor={colors.primary}
       />
-      <NavigationContainer>
+      <NavigationContainer theme={navigationTheme}>
         <MainTabNavigator />
       </NavigationContainer>
     </SafeAreaProvider>
+  );
+}
+
+function App() {
+  return (
+    <ThemeProvider>
+      <AppContent />
+    </ThemeProvider>
   );
 }
 
