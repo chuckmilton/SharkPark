@@ -4,19 +4,28 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { SectionCard } from '../components/SectionCard';
 import { Header } from '../components';
-import { COLORS, TYPOGRAPHY, SPACING } from '../constants/theme';
-
-type ThemeMode = 'light' | 'dark' | 'auto';
+import { TYPOGRAPHY, SPACING } from '../constants/theme';
+import { useTheme } from '../context/ThemeContext';
 
 const ProfileScreen: React.FC = () => {
+  const { themeMode, setThemeMode, colors } = useTheme();
   const [notifications, setNotifications] = useState({
     highOccupancy: true, favoriteLots: true, incidents: false,
   });
-  const [theme, setTheme] = useState<ThemeMode>('light');
 
   const ToggleSwitch = ({ value }: { value: boolean }) => (
-    <View style={[styles.toggleContainer, value ? styles.toggleActive : styles.toggleInactive]}>
-      <View style={[styles.toggleThumb, value && styles.toggleThumbActive]} />
+    <View style={[
+      styles.toggleContainer, 
+      { backgroundColor: value ? colors.primary : colors.toggleGray }
+    ]}>
+      <View style={[
+        styles.toggleThumb, 
+        { 
+          backgroundColor: colors.white,
+          shadowColor: colors.shadowDark,
+          transform: [{ translateX: value ? 20 : 0 }] 
+        }
+      ]} />
     </View>
   );
 
@@ -41,7 +50,7 @@ const ProfileScreen: React.FC = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: colors.lightGray }]}>
       {/* Header */}
       <Header 
         title="Profile & Settings"
@@ -55,8 +64,8 @@ const ProfileScreen: React.FC = () => {
           <View style={styles.settingsList}>
             <View style={styles.settingItem}>
               <View style={styles.settingText}>
-                <Text style={styles.settingLabel}>High Occupancy Alerts</Text>
-                <Text style={styles.settingDescription}>Get notified when lots reach 80% capacity</Text>
+                <Text style={[styles.settingLabel, { color: colors.black }]}>High Occupancy Alerts</Text>
+                <Text style={[styles.settingDescription, { color: colors.gray }]}>Get notified when lots reach 80% capacity</Text>
               </View>
               <TouchableOpacity
                 onPress={() => setNotifications(prev => ({ ...prev, highOccupancy: !prev.highOccupancy }))}
@@ -65,12 +74,12 @@ const ProfileScreen: React.FC = () => {
               </TouchableOpacity>
             </View>
 
-            <View style={styles.divider} />
+            <View style={[styles.divider, { backgroundColor: colors.borderGray }]} />
 
             <View style={styles.settingItem}>
               <View style={styles.settingText}>
-                <Text style={styles.settingLabel}>Favorite Lot Updates</Text>
-                <Text style={styles.settingDescription}>Receive updates on favorited parking lots</Text>
+                <Text style={[styles.settingLabel, { color: colors.black }]}>Favorite Lot Updates</Text>
+                <Text style={[styles.settingDescription, { color: colors.gray }]}>Receive updates on favorited parking lots</Text>
               </View>
               <TouchableOpacity
                 onPress={() => setNotifications(prev => ({ ...prev, favoriteLots: !prev.favoriteLots }))}
@@ -79,12 +88,12 @@ const ProfileScreen: React.FC = () => {
               </TouchableOpacity>
             </View>
 
-            <View style={styles.divider} />
+            <View style={[styles.divider, { backgroundColor: colors.borderGray }]} />
 
             <View style={styles.settingItem}>
               <View style={styles.settingText}>
-                <Text style={styles.settingLabel}>Incident Alerts</Text>
-                <Text style={styles.settingDescription}>Get notified about parking lot incidents</Text>
+                <Text style={[styles.settingLabel, { color: colors.black }]}>Incident Alerts</Text>
+                <Text style={[styles.settingDescription, { color: colors.gray }]}>Get notified about parking lot incidents</Text>
               </View>
               <TouchableOpacity
                 onPress={() => setNotifications(prev => ({ ...prev, incidents: !prev.incidents }))}
@@ -99,35 +108,59 @@ const ProfileScreen: React.FC = () => {
         <SectionCard title="Appearance">
           <View style={styles.themeList}>
             <TouchableOpacity
-              onPress={() => setTheme('light')}
-              style={[styles.themeButton, theme === 'light' && styles.themeButtonActive]}
+              onPress={() => setThemeMode('light')}
+              style={[
+                styles.themeButton, 
+                { borderColor: colors.borderGray },
+                themeMode === 'light' && { borderColor: colors.primary, backgroundColor: colors.yellowLight }
+              ]}
             >
-              <Text style={styles.themeLabel}>Light Mode</Text>
-              {theme === 'light' && <View style={styles.selectedIndicator} />}
+              <Text style={[styles.themeLabel, { color: colors.black }]}>
+                Light Mode
+              </Text>
+              {themeMode === 'light' && <View style={[styles.selectedIndicator, { backgroundColor: colors.primary }]} />}
             </TouchableOpacity>
 
             <TouchableOpacity
-              onPress={() => setTheme('dark')}
-              style={[styles.themeButton, theme === 'dark' && styles.themeButtonActive]}
+              onPress={() => setThemeMode('dark')}
+              style={[
+                styles.themeButton, 
+                { borderColor: colors.borderGray },
+                themeMode === 'dark' && { borderColor: colors.primary, backgroundColor: colors.yellowLight }
+              ]}
             >
-              <Text style={styles.themeLabel}>Dark Mode</Text>
-              {theme === 'dark' && <View style={styles.selectedIndicator} />}
+              <Text style={[styles.themeLabel, { color: colors.black }]}>
+                Dark Mode
+              </Text>
+              {themeMode === 'dark' && <View style={[styles.selectedIndicator, { backgroundColor: colors.primary }]} />}
             </TouchableOpacity>
-            
+
             <TouchableOpacity
-              onPress={() => setTheme('auto')}
-              style={[styles.themeButton, theme === 'auto' && styles.themeButtonActive]}
+              onPress={() => setThemeMode('system')}
+              style={[
+                styles.themeButton, 
+                { borderColor: colors.borderGray },
+                themeMode === 'system' && { borderColor: colors.primary, backgroundColor: colors.yellowLight }
+              ]}
             >
-              <Text style={styles.themeLabel}>Auto (System)</Text>
-              {theme === 'auto' && <View style={styles.selectedIndicator} />}
+              <Text style={[styles.themeLabel, { color: colors.black }]}>
+                System Settings
+              </Text>
+              {themeMode === 'system' && <View style={[styles.selectedIndicator, { backgroundColor: colors.primary }]} />}
             </TouchableOpacity>
           </View>
         </SectionCard>
 
         {/* Logout Button */}
-        <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
-          <Icon name="log-out-outline" size={20} color={COLORS.errorText} />
-          <Text style={styles.logoutButtonText}>Logout</Text>
+        <TouchableOpacity 
+          style={[
+            styles.logoutButton, 
+            { backgroundColor: colors.errorLight, borderColor: colors.errorBorder }
+          ]} 
+          onPress={handleLogout}
+        >
+          <Icon name="log-out-outline" size={20} color={colors.errorText} />
+          <Text style={[styles.logoutButtonText, { color: colors.errorText }]}>Logout</Text>
         </TouchableOpacity>
         </ScrollView>
       </SafeAreaView>
@@ -138,7 +171,6 @@ const ProfileScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.lightGray,
   },
   scrollView: {
     flex: 1,
@@ -146,7 +178,7 @@ const styles = StyleSheet.create({
   content: {
     padding: SPACING.xxxl,
     gap: SPACING.xxxl,
-    paddingBottom: 0, // Reduced padding to prevent content cutoff above nav bar
+    paddingBottom: SPACING.xxxl, // Add proper padding for better layout
   },
   settingsList: {
     gap: SPACING.lg,
@@ -162,16 +194,13 @@ const styles = StyleSheet.create({
   },
   settingLabel: {
     fontSize: TYPOGRAPHY.fontSize.md,
-    color: COLORS.black,
     marginBottom: SPACING.xs,
   },
   settingDescription: {
     fontSize: TYPOGRAPHY.fontSize.sm,
-    color: COLORS.gray,
   },
   divider: {
     height: 1,
-    backgroundColor: COLORS.borderGray,
   },
   toggleContainer: {
     width: 48,
@@ -180,18 +209,10 @@ const styles = StyleSheet.create({
     padding: 2,
     justifyContent: 'center',
   },
-  toggleActive: {
-    backgroundColor: COLORS.primary,
-  },
-  toggleInactive: {
-    backgroundColor: COLORS.toggleGray,
-  },
   toggleThumb: {
     width: 20,
     height: 20,
     borderRadius: 10,
-    backgroundColor: COLORS.white,
-    shadowColor: COLORS.shadowDark,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 2,
@@ -201,7 +222,7 @@ const styles = StyleSheet.create({
     transform: [{ translateX: 24 }],
   },
   themeList: {
-    gap: SPACING.sm,
+    gap: SPACING.xs, // Reduced gap to accommodate the third button
   },
   themeButton: {
     flexDirection: 'row',
@@ -210,37 +231,27 @@ const styles = StyleSheet.create({
     padding: SPACING.lg,
     borderRadius: SPACING.lg,
     borderWidth: 2,
-    borderColor: COLORS.borderGray,
-  },
-  themeButtonActive: {
-    borderColor: COLORS.primary,
-    backgroundColor: COLORS.yellowLight,
   },
   themeLabel: {
     fontSize: TYPOGRAPHY.fontSize.md,
-    color: COLORS.black,
   },
   selectedIndicator: {
     width: 12,
     height: 12,
     borderRadius: 6,
-    backgroundColor: COLORS.primary,
   },
   logoutButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: COLORS.errorLight,
     padding: SPACING.lg,
     borderRadius: SPACING.lg, // More rounded
     borderWidth: 2,
-    borderColor: COLORS.errorBorder,
     justifyContent: 'center',
     marginTop: SPACING.md,
   },
   logoutButtonText: {
     fontSize: TYPOGRAPHY.fontSize.md,
     fontWeight: TYPOGRAPHY.fontWeight.semibold,
-    color: COLORS.errorText,
     marginLeft: SPACING.md,
   },
 });

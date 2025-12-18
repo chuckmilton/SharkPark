@@ -4,6 +4,7 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { COLORS, TYPOGRAPHY, SPACING } from '../constants/theme';
 import { Header } from '../components';
+import { useTheme } from '../context/ThemeContext';
 
 import {getOccupancyColor} from '../utils/parkingUtils';
 import {HourlyChart} from '../components/HourlyChart';
@@ -16,6 +17,7 @@ export function ShortTermForecastScreen() {
   const navigation = useNavigation();
   const route = useRoute<MapStackScreenProps<'Short Term Forecast'>['route']>();
   const { lotId } = route.params || { lotId: 'G1' };
+  const { colors } = useTheme();
   
   // Find the lot from our data
   const lot = parkingLots.find(l => l.id === lotId) || parkingLots[0];
@@ -78,7 +80,7 @@ export function ShortTermForecastScreen() {
   const todayEvents = getTodayEvents();
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: colors.lightGray }]}>
       {/* Top Banner */}
       <Header title="Short-Term Forecast" onBack={onBack}/>
 
@@ -102,8 +104,8 @@ export function ShortTermForecastScreen() {
         )}
 
         {/* Title Card w/ Lot Name and Occupancy */}
-        <View style={styles.lotHeaderCard}>
-          <Text style={styles.lotName}>{lot.name}</Text>
+        <View style={[styles.lotHeaderCard, { backgroundColor: colors.white }]}>
+          <Text style={[styles.lotName, { color: colors.textPrimary }]}>{lot.name}</Text>
           <View style={[styles.statusBadge, {backgroundColor: getOccupancyColor(lot.occupancy)}]}>
             <Text style={styles.statusBadgeText}>{lot.occupancy}%</Text>
           </View>
@@ -145,7 +147,6 @@ export function ShortTermForecastScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.lightGray,
   },
 
   scrollView: {
@@ -200,7 +201,6 @@ const styles = StyleSheet.create({
 
   // Title card + Status
   lotHeaderCard: {
-    backgroundColor: COLORS.white,
     borderRadius: SPACING.lg,
     padding: SPACING.xxxl,
     marginHorizontal: SPACING.lg,
@@ -216,7 +216,6 @@ const styles = StyleSheet.create({
   
   lotName: {
     fontSize: TYPOGRAPHY.fontSize.xxxl,
-    color: COLORS.textPrimary,
     fontWeight: TYPOGRAPHY.fontWeight.semibold,
     textAlign: 'center',
   },
