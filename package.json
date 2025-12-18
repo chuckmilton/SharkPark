@@ -11,12 +11,15 @@
     "typecheck": "turbo run typecheck",
     "format": "prettier . --check",
     "format:fix": "prettier . --write",
-    "prepare": "husky install",
+    "prepare": "husky || true",
     "postinstall": "node -e \"if (process.env.SKIP_LOCAL_INFRA !== '1') require('child_process').execSync('./scripts/start-local.sh', {stdio: 'inherit'})\" || true",
-    "test": "echo \"no tests yet\""
+    "test": "echo \"no tests yet\"",
+    "db:setup": "tsx scripts/setup-dynamodb-schema.ts",
+    "db:seed": "tsx scripts/seed-database.ts"
   },
   "devDependencies": {
     "@eslint/js": "^9.38.0",
+    "@types/node": "^22.18.13",
     "@typescript-eslint/eslint-plugin": "^8.46.2",
     "@typescript-eslint/parser": "^8.46.2",
     "eslint": "^9.38.0",
@@ -26,5 +29,10 @@
     "prettier": "^3.6.2",
     "turbo": "^2.6.0",
     "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.948.0",
+    "@aws-sdk/util-dynamodb": "^3.948.0",
+    "tsx": "^4.21.0"
   }
 }

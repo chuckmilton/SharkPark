@@ -1,11 +1,12 @@
 import { Injectable } from '@nestjs/common';
+import { SERVICE_NAME } from './constants';
 
 @Injectable()
 export class AppService {
   getHealth() {
     return {
       ok: true,
-      service: 'sharkpark-backend',
+      service: SERVICE_NAME,
     };
   }
 }

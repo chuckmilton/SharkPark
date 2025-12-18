@@ -15,7 +15,7 @@ describe('AppController', () => {
     appController = app.get<AppController>(AppController);
   });
 
-  it('should return health', () => {
+  it('should return health check with ok status and service name', () => {
     expect(appController.health()).toEqual({
       ok: true,
       service: SERVICE_NAME,
