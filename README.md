@@ -125,25 +125,37 @@ pnpm typecheck
 
 ## Run the backend (NestJS)
 
+**Setup database first (one-time):**
+```bash
+pnpm db:setup    # Creates DynamoDB tables
+pnpm db:seed     # Seeds test data (25 lots, 5 users, 4 events, weather)
+```
+
+**Start the server:**
 ```bash
 cd apps/backend
 pnpm dev
 ```
 
-API:
+API base URL: `http://localhost:3000/api/v1`
 
-```text
-http://localhost:3000/api/v1/health
-```
+**Endpoints:**
 
-Response:
-
-```json
-{
-  "ok": true,
-  "service": "sharkpark-backend"
-}
-```
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/health` | Health check |
+| GET | `/lots` | Get all parking lots (supports query filters) |
+| GET | `/lots/summary` | Campus-wide occupancy summary |
+| GET | `/lots/:id` | Get specific lot |
+| GET | `/lots/:id/history` | Historical occupancy data |
+| GET | `/users/:userId` | Get user profile |
+| GET | `/users/:userId/favorites` | Get user's favorite lots |
+| POST | `/users/:userId/favorites/:lotId` | Add to favorites |
+| DELETE | `/users/:userId/favorites/:lotId` | Remove from favorites |
+| PATCH | `/users/:userId/notifications` | Update notification preferences |
+| GET | `/events` | Get campus events |
+| GET | `/events/:eventId/impacts` | Get event parking impacts |
+| GET | `/weather/current` | Get current weather |
 
 ---
 
@@ -152,8 +164,8 @@ Response:
 From root:
 
 ```bash
-pnpm -C apps/backend test
-pnpm -C apps/backend test:e2e
+pnpm -C apps/backend test       # 41 unit tests
+pnpm -C apps/backend test:e2e   # 27 E2E tests
 ```
 
 Or inside backend:
@@ -164,8 +176,7 @@ pnpm test
 pnpm test:e2e
 ```
 
-* `pnpm test` → unit tests
-* `pnpm test:e2e` → hits `/api/v1/health`
+Unit tests cover all services and controllers. E2E tests hit real DynamoDB Local.
 
 ---
 
@@ -238,7 +249,9 @@ SharkPark/                      # monorepo root
 ├── .husky/                     # git hooks (pre-commit runs lint + typecheck)
 │   └── pre-commit
 ├── scripts/                    # helper shell scripts for local/dev ops
-│   └── start-local.sh          # spins up local infra (dynamodb-local, localstack)
+│   ├── start-local.sh          # spins up local infra (dynamodb-local, localstack)
+│   ├── setup-dynamodb-schema.ts # creates DynamoDB tables with indexes
+│   └── seed-database.ts        # seeds test data (lots, users, events, weather)
 ├── docker/                     # local development infrastructure
 │   └── docker-compose.yml      # DynamoDB Local + LocalStack (S3)
 ├── infrastructure/             # AWS deployment code (CDK/SST - planned)
@@ -247,11 +260,17 @@ SharkPark/                      # monorepo root
 │   ├── backend/                # NestJS API server (parking data, auth, events)
 │   │   ├── src/                # backend source code
 │   │   │   ├── main.ts         # NestJS entrypoint / bootstrap
-│   │   │   ├── app.module.ts   # root module, imports other modules
-│   │   │   ├── app.controller.ts # sample controller endpoints
-│   │   │   ├── app.service.ts  # sample service logic
-│   │   │   └── constants.ts    # API prefix, service name
-│   │   ├── test/               # e2e tests for backend
+│   │   │   ├── app.module.ts   # root module, imports feature modules
+│   │   │   ├── app.controller.ts # health check endpoint
+│   │   │   ├── app.service.ts  # health check service
+│   │   │   ├── constants.ts    # API prefix, service name
+│   │   │   ├── database/       # DynamoDB client module
+│   │   │   ├── lots/           # parking lots (service, controller, interfaces)
+│   │   │   ├── users/          # users and favorites
+│   │   │   ├── events/         # campus events
+│   │   │   ├── weather/        # weather data
+│   │   │   └── common/         # shared filters, guards
+│   │   ├── test/               # E2E tests (27 tests across 5 suites)
 │   │   ├── dist/               # compiled output (gitignored)
 │   │   ├── tsconfig.json       # backend-specific TS settings (extends root)
 │   │   ├── tsconfig.build.json # TS build target for NestJS
@@ -374,22 +393,29 @@ CI: add secrets in GitHub → Actions → Repository secrets.
 ## Local quickstart
 
 ```bash
+# 1. Install dependencies (also starts Docker containers)
 pnpm install
-./scripts/start-local.sh
+
+# 2. Setup and seed database (one-time)
+pnpm db:setup
+pnpm db:seed
+
+# 3. Verify everything builds
 pnpm build
 pnpm lint
 pnpm typecheck
 
+# 4. Run backend
 cd apps/backend
 pnpm dev
-# http://localhost:3000/api/v1/health
+# API at http://localhost:3000/api/v1
 
-# new terminal
+# 5. Run mobile (new terminal)
 cd apps/mobile
-pnpm install
 pnpm ios   # or pnpm android
+```
 
-# (future)
-cd services/ml
-pnpm dev
+If Docker containers stopped, restart them:
+```bash
+./scripts/start-local.sh
 ```

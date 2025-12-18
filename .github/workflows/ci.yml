@@ -6,33 +6,22 @@ jobs:
     runs-on: ubuntu-latest
     env:
       SKIP_LOCAL_INFRA: "1"
+      DYNAMO_ENDPOINT: "http://localhost:8000"
+      AWS_REGION: "us-west-2"
+      AWS_ACCESS_KEY_ID: "local"
+      AWS_SECRET_ACCESS_KEY: "local"
     
-    # NOTE: we disabled GH services for now because docker healthchecks were failing on runners.
-    # when backend actually needs dynamodb/localstack in CI, re-enable this block and point tests to it.
+    services:
+      dynamodb:
+        image: amazon/dynamodb-local:latest
+        ports:
+          - "8000:8000"
+        options: >-
+          --health-cmd="java -version"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
     
-    # services:
-    #   dynamodb:
-    #     image: amazon/dynamodb-local
-    #     ports:
-    #       - "8000:8000"
-    #     options: >-
-    #       --health-cmd="curl -f http://localhost:8000/shell/ || exit 1"
-    #       --health-interval=5s
-    #       --health-timeout=2s
-    #       --health-retries=10
-    #   localstack:
-    #     image: localstack/localstack
-    #     env:
-    #       SERVICES: s3
-    #       AWS_DEFAULT_REGION: us-west-2
-    #       EDGE_PORT: 4566
-    #     ports:
-    #       - "4566:4566"
-    #     options: >-
-    #       --health-cmd="curl -f http://localhost:4566/_localstack/health || exit 1"
-    #       --health-interval=5s
-    #       --health-timeout=2s
-    #       --health-retries=20
     steps:
       - uses: actions/checkout@v4
 
@@ -45,10 +34,16 @@ jobs:
           node-version: 22
           cache: pnpm
 
-      - name: Install deps
+      - name: Install dependencies
         run: pnpm install
 
-      - name: Build
+      - name: Setup DynamoDB tables
+        run: pnpm db:setup
+
+      - name: Seed test data
+        run: pnpm db:seed
+
+      - name: Build all packages
         run: pnpm build
 
       - name: Lint
@@ -60,5 +55,8 @@ jobs:
       - name: Backend unit tests
         run: pnpm -C apps/backend test
 
-      - name: Backend e2e tests
+      - name: Backend E2E tests
         run: pnpm -C apps/backend test:e2e
+
+      - name: Mobile tests
+        run: pnpm -C apps/mobile test

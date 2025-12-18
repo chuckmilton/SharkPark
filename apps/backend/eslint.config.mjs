@@ -15,6 +15,17 @@ export default [
         tsconfigRootDir: import.meta.dirname,
         ecmaVersion: "latest",
         sourceType: "module"
+      },
+      globals: {
+        process: "readonly",
+        console: "readonly",
+        __dirname: "readonly",
+        __filename: "readonly",
+        Buffer: "readonly",
+        setTimeout: "readonly",
+        setInterval: "readonly",
+        clearTimeout: "readonly",
+        clearInterval: "readonly"
       }
     },
     plugins: {
@@ -39,11 +50,18 @@ export default [
         expect: "readonly",
         beforeAll: "readonly",
         afterAll: "readonly",
-        beforeEach: "readonly"
+        beforeEach: "readonly",
+        afterEach: "readonly",
+        jest: "readonly"
       }
     },
+    plugins: {
+      "@typescript-eslint": ts
+    },
     rules: {
-      ...js.configs.recommended.rules
+      ...js.configs.recommended.rules,
+      ...ts.configs.recommended.rules,
+      "@typescript-eslint/no-explicit-any": "off"
     }
   }
 ];

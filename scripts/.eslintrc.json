@@ -1,0 +1,19 @@
+{
+  "env": {
+    "node": true,
+    "es2021": true
+  },
+  "globals": {
+    "process": "readonly",
+    "console": "readonly",
+    "setTimeout": "readonly",
+    "__dirname": "readonly",
+    "__filename": "readonly"
+  },
+  "rules": {
+    "@typescript-eslint/no-unused-vars": ["error", {
+      "argsIgnorePattern": "^_",
+      "varsIgnorePattern": "^_"
+    }]
+  }
+}
