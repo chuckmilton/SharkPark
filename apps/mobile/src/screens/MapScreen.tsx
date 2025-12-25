@@ -6,7 +6,6 @@ import {
   Dimensions,
   TouchableOpacity,
   Text,
-  ScrollView,
   ImageSourcePropType,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -20,6 +19,8 @@ import { LotFilterModal } from '../components/Modals/FilterModal';
 import { TYPOGRAPHY, SPACING } from '../constants/theme';
 import { useTheme, ThemeColors } from '../context/ThemeContext';
 import type { MapStackParamList } from '../types/navigation';
+import { GestureHandlerRootView, GestureDetector, Gesture } from 'react-native-gesture-handler';
+import Animated, { useSharedValue, useAnimatedStyle } from 'react-native-reanimated';
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
@@ -73,6 +74,47 @@ const MapScreen: React.FC = () => {
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
   const [selectedLots, setSelectedLots] = useState<string[]>([]);
   const navigation = useNavigation<StackNavigationProp<MapStackParamList>>();
+  
+  // Shared values for map transformations (pan and zoom)
+  const translateX = useSharedValue(0);
+  const translateY = useSharedValue(0);
+  const scale = useSharedValue(1);
+  const savedTranslateX = useSharedValue(0);
+  const savedTranslateY = useSharedValue(0);
+  const savedScale = useSharedValue(1);
+
+  const panGesture = Gesture.Pan()
+    .minPointers(1)
+    .maxPointers(1)
+    .onUpdate((e) => {
+      translateX.value = savedTranslateX.value + e.translationX;
+      translateY.value = savedTranslateY.value + e.translationY;
+    })
+    .onEnd(() => {
+      savedTranslateX.value = translateX.value;
+      savedTranslateY.value = translateY.value;
+    });
+
+  const pinchGesture = Gesture.Pinch()
+    .onUpdate((e) => {
+      const newScale = savedScale.value * e.scale;
+      scale.value = Math.max(0.5, Math.min(newScale, 3));
+    })
+    .onEnd(() => {
+      savedScale.value = scale.value;
+    });
+
+  const composedGesture = Gesture.Simultaneous(panGesture, pinchGesture);
+  
+  // Apply animated transformations to the map
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [
+      { translateX: translateX.value },
+      { translateY: translateY.value },
+      { scale: scale.value },
+    ],
+  }));
+
 
   const handleLotPress = (lot: ParkingLotUI) => {
     // Navigate to ShortTermForecastScreen with lot data
@@ -111,40 +153,33 @@ const MapScreen: React.FC = () => {
         title="Map View"
       />
 
-      {/* Scrollable map with zoom and pan */}
-      <ScrollView
-        style={styles.scrollView}
-        contentContainerStyle={styles.mapContainer}
-        minimumZoomScale={0.5}
-        maximumZoomScale={3.0}
-        bouncesZoom={true}
-        scrollEnabled={true}
-        showsVerticalScrollIndicator={false}
-        showsHorizontalScrollIndicator={false}
-        contentOffset={{ 
-          x: screenWidth, // Center horizontally
-          y: screenHeight   // Move down to center on the map image
-        }}
-      >
-        {/* Campus map background */}
-        <View style={styles.mapImageContainer}>
-          <Image
-            source={campusMapImage}
-            style={styles.mapImage}
-            resizeMode="contain"
-          />
-          
-          {/* Interactive parking lot circles */}
-          {filteredParkingLots.map((lot) => (
-            <InteractiveLot
-              key={lot.id}
-              lot={lot}
-              onPress={handleLotPress}
-              colors={colors}
-            />
-          ))}
-        </View>
-      </ScrollView>
+      <View style={{ flex: 1, overflow: 'hidden' }}>
+        <GestureHandlerRootView style={{ flex: 1 }}>
+          <GestureDetector gesture={composedGesture}>
+            <Animated.View style={[styles.mapContainer, animatedStyle]}>
+              {/* Campus map background */}
+              <View style={styles.mapImageContainer}>
+                <Image
+                  source={campusMapImage}
+                  style={styles.mapImage}
+                  resizeMode="contain"
+                />
+
+                {/* Interactive parking lot circles */}
+                {filteredParkingLots.map((lot) => (
+                  <InteractiveLot
+                    key={lot.id}
+                    lot={lot}
+                    onPress={handleLotPress}
+                    colors={colors}
+                  />
+                ))}
+              </View>
+            </Animated.View>
+          </GestureDetector>
+        </GestureHandlerRootView>
+      </View>
+
 
       {/* Filter button - bottom left */}
       <FilterButton onPress={handleFilterPress} colors={colors} />
@@ -167,23 +202,19 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  scrollView: {
-    flex: 1,
-  },
   mapContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    minHeight: screenHeight * 3, // Increase content area
-    minWidth: screenWidth * 3,   // Increase content area
-    paddingHorizontal: screenWidth * 0.75, // Reduced horizontal padding
-    paddingVertical: screenHeight * 0.25,  // Reduced vertical padding
+    position: 'absolute',
+    width: screenWidth * 3,
+    height: screenHeight * 3,
+    left: -(screenWidth * 0.75),
+    top: -(screenHeight * 0.25),
   },
   mapImageContainer: {
     position: 'relative',
   },
   mapImage: {
-    width: screenWidth * 2.5, // Slightly larger for better zoom range
-    height: screenHeight * 2.5,
+    width: screenWidth * 2.25, // Slightly larger for better zoom range
+    height: screenWidth * 2.25,
   },
   lotCircle: {
     position: 'absolute',
